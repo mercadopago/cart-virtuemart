@@ -57,7 +57,7 @@ payment method exclusion setup, and sandbox/debug options.
 4. Go to **Configuration** tab <br/>
   First of all, you need to configure your client credentials. To make it, fill your **Client_id**, **Client_secret** in Credentials Configuration section.
 
-  ![Installation Instructions](/README.img/credentials.png) <br />
+  ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials.png) <br />
 
   You can obtain your **Client_id** and **Client_secret**, accordingly to your country, in the following links:
 
@@ -70,7 +70,7 @@ payment method exclusion setup, and sandbox/debug options.
 
 5. Checkout settings. <br/>
 
-  ![Installation Instructions](/README.img/checkout_settings.png) <br />
+  ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings.png) <br />
 
   **Type Checkout**: How your customers will interact with Mercado Pago to pay their orders;<br />
   **Auto Redirect**: If set, the platform will return to your store when the payment is approved.<br />
@@ -82,7 +82,7 @@ payment method exclusion setup, and sandbox/debug options.
 
 6. IPN settings. <br/>
 
-  ![Installation Instructions](/README.img/ipn_settings.png) <br />
+  ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
 
   * **Choose the status of approved orders**: Sets up the order status when payments are approved.
   * **Choose the status when payment is pending**: Sets up the order status when payments are pending.
@@ -95,7 +95,7 @@ payment method exclusion setup, and sandbox/debug options.
 
 7. Other settings. <br/>
 
-  ![Installation Instructions](/README.img/other_settings.png) <br />
+  ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/other_settings.png) <br />
 
   **Store Category**: Sets up the category of the store;<br />
   **Log**: Enables/disables logs.<br />
