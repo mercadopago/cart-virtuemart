@@ -373,7 +373,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			$preference['auto_return'] = "approved";
 		}else{
 			//reset cart
-			$this->emptyCart();
+			$cart = VirtueMartCart::getCart();
+			$cart->emptyCart();
 		}
 
 
@@ -432,7 +433,8 @@ function plgVmOnPaymentResponseReceived(&$html){
 	);
 
 	//reset cart
-	$this->emptyCart();
+	$cart = VirtueMartCart::getCart();
+	$cart->emptyCart();
 
 	JRequest::setVar('html', $html);
 	return TRUE;
@@ -525,13 +527,6 @@ function plgVmOnPaymentNotification(){
 	exit;
 
 }
-
-
-function emptyCart(){
-	$cart = VirtueMartCart::getCart();
-	$cart->emptyCart();
-}
-
 
 /**
 * Create the table for this plugin if it does not yet exist.
