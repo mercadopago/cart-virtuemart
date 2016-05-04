@@ -486,9 +486,6 @@ class MPRestClient {
         curl_setopt($connect, CURLOPT_CUSTOMREQUEST, $request["method"]);
         curl_setopt($connect, CURLOPT_HTTPHEADER, $headers);
 
-        //proxy for MELICLOUD
-        curl_setopt($connect, CURLOPT_PROXY, "http://172.16.0.89:80");
-
         // Set parameters and url
         if (isset ($request["params"]) && is_array($request["params"]) && count($request["params"]) > 0) {
             $request["uri"] .= (strpos($request["uri"], "?") === false) ? "?" : "&";
