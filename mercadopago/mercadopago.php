@@ -127,7 +127,6 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	*/
 	public function plgVmDisplayListFEPayment(VirtueMartCart $cart, $selected = 0, &$htmlIn) {
 		$this->displayListFE($cart, $selected, $htmlIn);
-		$htmlIn[] = array("teste");
 		return true;
 	}
 
