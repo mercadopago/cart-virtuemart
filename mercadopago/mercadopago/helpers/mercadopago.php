@@ -27,7 +27,7 @@ class MercadoPagoHelper{
 
     $payment_method = MercadoPagoHelper::getParamsMP($virtuemart_paymentmethod_id);
 
-    if($payment_method['mercadopago_site_id'] == "VALUE_SITE_ID"){
+        if($payment_method['mercadopago_site_id'] == "VALUE_SITE_ID" || $payment_method['mercadopago_site_id'] == ""){
 
       if($payment_method['mercadopago_client_id'] != "" && $payment_method['mercadopago_client_secret'] !=""){
         $mercadopago = new MP($payment_method['mercadopago_client_id'], $payment_method['mercadopago_client_secret']);
@@ -43,7 +43,7 @@ class MercadoPagoHelper{
         $user = MPRestClient::get($request);
 
         $payment_method['mercadopago_site_id'] = $user['response']['site_id'];
-        
+
       }else{
         $payment_method['mercadopago_site_id'] = "default";
       }
