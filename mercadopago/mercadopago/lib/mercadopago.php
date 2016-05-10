@@ -229,7 +229,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:std,type:virtuemart,so:1.0.0"
+                "X-Tracking-Id" => "platform:std,type:virtuemart,so:1.0.1"
             ),
             "data" => $preference
         );
@@ -485,9 +485,6 @@ class MPRestClient {
         curl_setopt($connect, CURLOPT_CAINFO, $GLOBALS["LIB_LOCATION"] . "/cacert.pem");
         curl_setopt($connect, CURLOPT_CUSTOMREQUEST, $request["method"]);
         curl_setopt($connect, CURLOPT_HTTPHEADER, $headers);
-
-        //proxy for MELICLOUD
-        curl_setopt($connect, CURLOPT_PROXY, "http://172.16.0.89:80");
 
         // Set parameters and url
         if (isset ($request["params"]) && is_array($request["params"]) && count($request["params"]) > 0) {

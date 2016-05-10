@@ -24,6 +24,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 	function __construct(&$subject, $config) {
 
+
 		parent::__construct($subject, $config);
 
 		$this->_loggable = TRUE;
@@ -95,6 +96,23 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		);
 	}
 
+
+	/**
+	 * plgVmOnCheckAutomaticSelectedPayment
+	 * Checks how many plugins are available. If only one, the user will not have the choice. Enter edit_xxx page
+	 * The plugin must check first if it is the correct type
+	 *
+	 * @author Valerie Isaksen
+	 * @param VirtueMartCart cart: the cart object
+	 * @return null if no plugin was found, 0 if more then one plugin was found,  virtuemart_xxx_id if only one plugin is found
+	 *
+	 */
+
+	function plgVmOnCheckAutomaticSelectedPayment (VirtueMartCart $cart, array $cart_prices = array(), &$paymentCounter) {
+		return $this->onCheckAutomaticSelected ($cart, $cart_prices, $paymentCounter);
+	}
+
+
 	/**
 	* plgVmDisplayListFEPayment
 	* This event is fired to display the pluginmethods in the cart (edit shipment/payment) for exampel
@@ -108,8 +126,11 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	* @author Max Milbers
 	*/
 	public function plgVmDisplayListFEPayment(VirtueMartCart $cart, $selected = 0, &$htmlIn) {
-		return $this->displayListFE($cart, $selected, $htmlIn);
+		$this->displayListFE($cart, $selected, $htmlIn);
+		return true;
 	}
+
+
 
 	/**
 	* Check if the payment conditions are fulfilled for this payment method
@@ -373,7 +394,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			$preference['auto_return'] = "approved";
 		}else{
 			//reset cart
-			$this->emptyCart();
+			$cart = VirtueMartCart::getCart();
+			$cart->emptyCart();
 		}
 
 
@@ -432,7 +454,8 @@ function plgVmOnPaymentResponseReceived(&$html){
 	);
 
 	//reset cart
-	$this->emptyCart();
+	$cart = VirtueMartCart::getCart();
+	$cart->emptyCart();
 
 	JRequest::setVar('html', $html);
 	return TRUE;
@@ -524,12 +547,6 @@ function plgVmOnPaymentNotification(){
 	header($status_http);
 	exit;
 
-}
-
-
-function emptyCart(){
-	$cart = VirtueMartCart::getCart();
-	$cart->emptyCart();
 }
 
 
