@@ -229,7 +229,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:std,type:virtuemart,so:1.0.1"
+                "X-Tracking-Id" => "platform:desktop,type:virtuemart,so:1.0.2"
             ),
             "data" => $preference
         );
