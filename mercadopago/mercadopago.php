@@ -215,6 +215,9 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 					case 'MLM':
 						$sponsor_id = 210949235;
 						break;
+					case 'MPE':
+						$sponsor_id = 217174514;
+						break;
 					case 'MLV':
 						$sponsor_id = 210946191;
 						break;
@@ -343,7 +346,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		//$preference["payer"]["address"]["street_number"] = "";
 
 		// Shipments
-		$preference["shipments"]["mode"] = "custom";
+		//$preference["shipments"]["mode"] = "custom";
 
 		// busca o valor de venda e não o valor real da entrega
 		// $preference["shipments"]["cost"] = $cart->cartPrices['shipmentValue'];
