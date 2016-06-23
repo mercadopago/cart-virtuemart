@@ -215,6 +215,9 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 					case 'MLM':
 						$sponsor_id = 210949235;
 						break;
+					case 'MPE':
+						$sponsor_id = 217174514;
+						break;
 					case 'MLV':
 						$sponsor_id = 210946191;
 						break;
