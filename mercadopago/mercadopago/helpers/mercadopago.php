@@ -16,6 +16,37 @@ class MercadoPagoHelper{
       "MLC" => "https://secure.mlstatic.com/developers/site/cloud/banners/cl/468x60.gif",
       "MLV" => "https://imgmp.mlstatic.com/org-img/banners/ve/medios/468X60.jpg",
       "MLM" => "http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X60.JPG",
+      "MPE" => "http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X60.JPG",
+      "DEFAULT" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png"
+    );
+
+    return $banners[strtoupper($site_id)];
+  }
+
+  static function getBannerCustom($site_id){
+    $banners = array(
+      "MLA" => "http://imgmp.mlstatic.com/org-img/banners/ar/medios/online/468X60.jpg",
+      "MLB" => "http://imgmp.mlstatic.com/org-img/MLB/MP/BANNERS/tipo2_468X60.jpg",
+      "MCO" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "MLM" => "http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X60.JPG",
+      "MLC" => "https://secure.mlstatic.com/developers/site/cloud/banners/cl/468x60.gif",
+      "MLV" => "https://imgmp.mlstatic.com/org-img/banners/ve/medios/468X60.jpg",
+      "MPE" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "DEFAULT" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png"
+    );
+
+    return $banners[strtoupper($site_id)];
+  }
+
+  static function getBannerCustomTicket($site_id){
+    $banners = array(
+      "MLA" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "MLB" => "http://imgmp.mlstatic.com/org-img/MLB/MP/BANNERS/2014/230x60.png",
+      "MCO" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "MLM" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "MLC" => "https://secure.mlstatic.com/developers/site/cloud/banners/cl/468x60.gif",
+      "MLV" => "https://imgmp.mlstatic.com/org-img/banners/ve/medios/468X60.jpg",
+      "MPE" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
       "DEFAULT" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png"
     );
 
@@ -27,7 +58,7 @@ class MercadoPagoHelper{
 
     $payment_method = MercadoPagoHelper::getParamsMP($virtuemart_paymentmethod_id);
 
-        if($payment_method['mercadopago_site_id'] == "VALUE_SITE_ID" || $payment_method['mercadopago_site_id'] == ""){
+    if($payment_method['mercadopago_site_id'] == "VALUE_SITE_ID"){
 
       if($payment_method['mercadopago_client_id'] != "" && $payment_method['mercadopago_client_secret'] !=""){
         $mercadopago = new MP($payment_method['mercadopago_client_id'], $payment_method['mercadopago_client_secret']);

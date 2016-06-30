@@ -1,0 +1,15 @@
+#mercadopago-off-payments{
+}
+
+#mercadopago-off-payments li{
+  list-style: none;
+  height: 32px;
+  vertical-align: 32px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+
+#mercadopago-off-payments li img{
+  vertical-align: middle;
+}
