@@ -74,22 +74,20 @@ class MP {
 
         return $this->access_data['access_token'];
     }
+
     /**
      * Get information Merchant Order
      * @param id
      * @return array(json)
     */
     public function get_merchant_order($id) {
-
       $uri_prefix = $this->sandbox ? "/sandbox" : "";
-
       $request = array(
           "uri" => $uri_prefix."/merchant_orders/{$id}",
           "params" => array(
               "access_token" => $this->get_access_token()
           )
       );
-
         $merchant_order = MPRestClient::get($request);
         return $merchant_order;
     }
@@ -229,7 +227,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "user-agent" => "platform:desktop,type:virtuemart,so:1.0.2"
+                "user-agent" => "platform:desktop,type:virtuemart,so:2.0.0"
             ),
             "data" => $preference
         );
@@ -273,6 +271,54 @@ class MP {
         $preference_result = MPRestClient::get($request);
         return $preference_result;
     }
+
+
+    /**
+     * Create a checkout preference
+     * @param array $preference
+     * @return array(json)
+     */
+    public function create_payment($preference) {
+        $request = array(
+            "uri" => "/v1/payments",
+            "params" => array(
+                "access_token" => $this->get_access_token()
+            ),
+            "headers" => array(
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:virtuemart,so:2.0.0"
+            ),
+            "data" => $preference
+        );
+
+        $payment = MPRestClient::post($request);
+        return $payment;
+    }
+
+    public function get_paymentV1($id) {
+        $request = array(
+            "uri" => "/v1/payments/{$id}",
+            "params" => array(
+                "access_token" => $this->get_access_token()
+            )
+        );
+
+        $payment = MPRestClient::get($request);
+        return $payment;
+    }
+
+    public function get_payment_methods_v1() {
+        $request = array(
+            "uri" => "/v1/payment_methods",
+            "params" => array(
+                "access_token" => $this->get_access_token()
+            )
+        );
+
+        $payment = MPRestClient::get($request);
+        return $payment;
+    }
+
+
 
     /**
      * Create a preapproval payment
@@ -526,29 +572,29 @@ class MPRestClient {
         $api_result = curl_exec($connect);
         $api_http_code = curl_getinfo($connect, CURLINFO_HTTP_CODE);
 
-        if ($api_result === FALSE) {
-            throw new MercadoPagoException (curl_error ($connect));
-        }
+        // if ($api_result === FALSE) {
+        //     throw new MercadoPagoException (curl_error ($connect));
+        // }
 
         $response = array(
             "status" => $api_http_code,
             "response" => json_decode($api_result, true)
         );
 
-        if ($response['status'] >= 400) {
-            $message = $response['response']['message'];
-            if (isset ($response['response']['cause'])) {
-                if (isset ($response['response']['cause']['code']) && isset ($response['response']['cause']['description'])) {
-                    $message .= " - ".$response['response']['cause']['code'].': '.$response['response']['cause']['description'];
-                } else if (is_array ($response['response']['cause'])) {
-                    foreach ($response['response']['cause'] as $cause) {
-                        $message .= " - ".$cause['code'].': '.$cause['description'];
-                    }
-                }
-            }
-
-            throw new MercadoPagoException ($message, $response['status']);
-        }
+        // if ($response['status'] >= 400) {
+        //     $message = $response['response']['message'];
+        //     if (isset ($response['response']['cause'])) {
+        //         if (isset ($response['response']['cause']['code']) && isset ($response['response']['cause']['description'])) {
+        //             $message .= " - ".$response['response']['cause']['code'].': '.$response['response']['cause']['description'];
+        //         } else if (is_array ($response['response']['cause'])) {
+        //             foreach ($response['response']['cause'] as $cause) {
+        //                 $message .= " - ".$cause['code'].': '.$cause['description'];
+        //             }
+        //         }
+        //     }
+        //
+        //     throw new MercadoPagoException ($message, $response['status']);
+        // }
 
         curl_close($connect);
 
