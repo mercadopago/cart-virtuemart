@@ -127,6 +127,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 				//set variable mercado pago
 				$payment_method = $this->setVariablesMP($payment_method);
+				$this->_debug = $payment_method->mercadopago_log == "true" ? TRUE : FALSE;
 
 				$cartPrices=$cart->cartPrices;
 
@@ -145,13 +146,27 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 				if ($this->checkConditions($cart, $selected, $cart->cartPrices) && $selected == $payment_method->virtuemart_paymentmethod_id) {
 
 					if($payment_method->mercadopago_product_checkout == "custom_credit_card"){
+
+						$payer_email = $cart->BT['email'];
+
+						if($payer_email == ""){
+							$payer_email = $cart->ST['email'];
+						}
+
+						$mercadopago = new MP($payment_method->mercadopago_access_token);
+						$customer = $mercadopago->get_or_create_customer($payer_email);
+
+						$this->logInfo("Email: {$payer_email} API Customer result:" . json_encode($customer), 'debug');
+
 						$params = array(
 							"virtuemart_paymentmethod_id" => $selected,
 							"public_key" => $payment_method->mercadopago_public_key,
 							"site_id" => $payment_method->mercadopago_site_id,
 							"params_mercadopago_custom" => vRequest::getVar('mercadopago_custom'),
-							"amount" => $cart->cartPrices['billTotal']
+							"amount" => $cart->cartPrices['billTotal'],
+							"customer" => $customer
 						);
+
 						$html .= $this->renderByLayout('mercadopago_checkout_custom', $params);
 
 					}elseif ($payment_method->mercadopago_product_checkout == "custom_ticket") {
@@ -474,12 +489,13 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		$this->logInfo('--------------------------------------', 'debug');
 		$this->logInfo('Post Payment V1', 'debug');
 
+		$mercadopago = new MP($payment_method->mercadopago_access_token);
 		$params = vRequest::getVar('mercadopago_custom');
 
 		$this->logInfo('PARAMS: ' . json_encode($params), 'debug');
 
 		if($params['paymentMethodId'] == ""){
-			$params['paymentMethodId'] = $params['paymentMethodIdSelector'];
+			$params['paymentMethodId'] = $params['paymentMethodSelector'];
 		}
 
 		$payment = array();
@@ -516,9 +532,21 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			$this->logInfo('added issuer_id from the temporary params', 'debug');
 		}
 
+		// Flow: for Customer & Cards
+		$payer_email = $order['details']['BT']->email;
+		$customer = $mercadopago->get_or_create_customer($payer_email);
+
+		if($params['CustomerAndCard'] == 'true'){
+			$payment['payer']['id'] = $customer['id'];
+		}
+
+		$payment['metadata']['token'] = $params['token'];;
+		$payment['metadata']['customer_id'] = $customer['id'];
+		// End Flow: for Customer & Cards
+
 		$this->logInfo('Params POST v1 Custom: ' . json_encode($payment), 'debug');
 
-		$mercadopago = new MP($payment_method->mercadopago_access_token);
+
 		$payment_result = $mercadopago->create_payment($payment);
 
 		$this->logInfo('Result POST v1 Custom: ' . json_encode($payment_result), 'debug');
@@ -801,6 +829,18 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			if($payment['status'] == 200){
 
 				$payment = $payment['response'];
+
+				//flow to create card in customer
+				if($payment_method->mercadopago_product_checkout == 'custom_credit_card' && $payment['status'] == 'approved'){
+					$customer_id = $payment['metadata']['customer_id'];
+					$token = $payment['metadata']['token'];
+					$payment_method_id = $payment['payment_method_id'];
+					$issuer_id = (int) $payment['issuer_id'];
+
+					//create card
+					$card = $mercadopago->create_card_in_customer($customer_id, $token, $payment_method_id, $issuer_id);
+					$this->logInfo("Card created: " . json_encode($card), 'debug');
+				}
 
 				//update order
 				$status_http = $this->updateStatusOrder($payment_method, $payment['external_reference'], $payment['status'], $payment);
