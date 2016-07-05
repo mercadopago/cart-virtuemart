@@ -551,16 +551,22 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		$this->logInfo('Result POST v1 Custom: ' . json_encode($payment_result), 'debug');
 
-		// empty car
-		$this->emptyCart();
+		if($payment_result['status'] == 200 || $payment_result['status'] == 201 ){
+			// empty car
+			$this->emptyCart();
 
-		$params = array(
-			"payment" => $payment_result
-		);
-		$html = $this->renderByLayout('mercadopago_response_custom', $params);
+			$params = array(
+				"payment" => $payment_result
+			);
 
-		JRequest::setVar('html', $html);
-		return true;
+			$html = $this->renderByLayout('mercadopago_response_custom', $params);
+			JRequest::setVar('html', $html);
+			return true;
+
+		}else{
+			return $this->processErrorV1($payment_result);
+		}
+
 	}
 
 	function postTicketPaymentV1($cart, $order, $payment_method){
@@ -589,18 +595,21 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		$this->logInfo('Result POST v1 Custom Ticket: ' . json_encode($payment_result), 'debug');
 
-		// empty car
-		$this->emptyCart();
+		if($payment_result['status'] == 200 || $payment_result['status'] == 201 ){
+			// empty car
+			$this->emptyCart();
 
-		$params = array(
-			"payment" => $payment_result
-		);
+			$params = array(
+				"payment" => $payment_result
+			);
 
-		$html = $this->renderByLayout('mercadopago_response_custom_ticket',$params);
+			$html = $this->renderByLayout('mercadopago_response_custom_ticket', $params);
+			JRequest::setVar('html', $html);
+			return true;
 
-		JRequest::setVar('html', $html);
-
-		return true;
+		}else{
+			return $this->processErrorV1($payment_result);
+		}
 	}
 
 	function makePreferenceV1($cart, $order, $payment_method){
@@ -705,6 +714,33 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		}
 
 		return $phone;
+	}
+
+	function processErrorV1($response){
+		$message = "";
+		foreach ($response['response']['cause'] as $causes) {
+			$string_translate = 'VMPAYMENT_MERCADOPAGO_POST_PAYMENT_ERROR_' . $causes['code'];
+			$message = vmText::_($string_translate);
+
+			//case not exist translate for code
+			if($string_translate == $message){
+				$message = $causes['description'];
+			}
+		}
+
+		$this->logInfo('Error message: ' . $message, 'debug');
+		$this->redirectOnMsg($message, 'Error');
+		return false;
+	}
+
+	function redirectOnMsg($message, $type){
+		// Warning
+		// Message
+		// Notice
+		// Error
+		$app = JFactory::getApplication();
+		$app->enqueueMessage($message, $type);
+		$app->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&Itemid=' . vRequest::getInt('Itemid'), false));
 	}
 
 	function plgVmOnPaymentResponseReceived(&$html){

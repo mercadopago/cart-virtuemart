@@ -965,6 +965,7 @@ $customer = $viewData['customer'];
       var mercadopago_site_id = '<?php echo $viewData['site_id']; ?>';
       var mercadopago_public_key = '<?php echo $viewData['public_key']; ?>';
       var params_mercadopago_custom = JSON.parse('<?php echo $params_mercadopago_custom; ?>');
+      var domain_store = '<?php echo JURI::root(); ?>';
 
       //replace function
       MPv1.getPaymentMethods = function(){
@@ -1102,7 +1103,8 @@ $customer = $viewData['customer'];
       MPv1.selectors.tempIssuer = "#tempIssuer";
       MPv1.selectors.tempInstallments = "#tempInstallments";
       MPv1.selectors.SecurityCodeCustomerAndCard = "#customer-and-card-securityCode";
-
+      MPv1.paths.loading = domain_store + "plugins/vmpayment/mercadopago/mercadopago/assets/images/loading.gif";
+      
       //init MPv1
       MPv1.Initialize(mercadopago_site_id, mercadopago_public_key);
 
