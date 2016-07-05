@@ -7,13 +7,13 @@
 }
 
 #mercadopago-main{
-  width: 360px;
+  width: 100%;
   float: left;
   margin: 10px 0 0;
 }
 
-#mercadopago-form, .mp-box-installments{
-  width: 100%;
+#mercadopago-form-customer-and-card, #mercadopago-form, .mp-box-installments{
+  width: 360px;
 }
 
 #mp-box-form{
