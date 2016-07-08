@@ -90,6 +90,7 @@ payment method exclusion setup, and sandbox/debug options.
   * Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
   * Colombia: https://www.mercadopago.com/mco/herramientas/aplicaciones
   * Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
+  * Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
   * Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
 
 5. Checkout settings. <br/>
@@ -99,7 +100,7 @@ payment method exclusion setup, and sandbox/debug options.
   **Type Checkout**: How your customers will interact with Mercado Pago to pay their orders;<br />
   **Auto Redirect**: If set, the platform will return to your store when the payment is approved.<br />
   **Maximum Number of Installments**: The maximum installments allowed for your customers;<br />
-	**Exclude Payment Methods**: Select the payment methods that you want to not work with Mercado Pago.<br />
+  **Exclude Payment Methods**: Select the payment methods that you want to not work with Mercado Pago.<br />
   **iFrame Width**: The width, in pixels, of the iFrame (used only with iFrame Integration Method);<br />
   **iFrame Height**: The height, in pixels, of the iFrame (used only with iFrame Integration Method);<br />
   **Mercado Pago Sandbox**: Test your payments in Mercado Pago sandbox environment;<br/>

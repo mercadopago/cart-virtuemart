@@ -412,7 +412,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		//$preference["payer"]["address"]["street_number"] = "";
 
 		// Shipments
-		$preference["shipments"]["mode"] = "custom";
+		//$preference["shipments"]["mode"] = "custom";
 
 		// busca o valor de venda e não o valor real da entrega
 		// $preference["shipments"]["cost"] = $cart->cartPrices['shipmentValue'];
