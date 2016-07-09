@@ -49,5 +49,3 @@ switch ($payment_method->mercadopago_type_checkout) {
 }
 
 echo $html;
-
-?>

@@ -7,6 +7,7 @@ class JFormFieldGetMercadoPago extends JFormField {
 	protected function getInput() {
 
 		vmJsApi::css('mercadopago', 'plugins/vmpayment/mercadopago/mercadopago/assets/css/');
+		vmJsApi::addJScript( '/plugins/vmpayment/mercadopago/mercadopago/assets/js/administrator.js');
 
 		$banner = MercadoPagoHelper::getBannerAdmin($_REQUEST['cid'][0]);
 
