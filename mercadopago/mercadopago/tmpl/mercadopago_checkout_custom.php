@@ -94,7 +94,7 @@ $customer = $viewData['customer'];
         <div class="mp-box-inputs mp-line" id="mp-securityCode-customer-and-card">
           <div class="mp-box-inputs mp-col-45">
             <label for="customer-and-card-securityCode"><?php echo $form_labels['form']['security_code']; ?> <em>*</em></label>
-            <input type="text" id="customer-and-card-securityCode" data-checkout="securityCode" name="mercadopago_custom[securityCodeCustomerAndCard]" autocomplete="off" maxlength="4"/>
+            <input type="text" id="customer-and-card-securityCode" data-checkout="securityCode" autocomplete="off" maxlength="4"/>
 
             <span class="mp-error" id="mp-error-224" data-main="#customer-and-card-securityCode"> <?php echo $form_labels['error']['224']; ?> </span>
             <span class="mp-error" id="mp-error-E302" data-main="#customer-and-card-securityCode"> <?php echo $form_labels['error']['E302']; ?> </span>
@@ -157,7 +157,7 @@ $customer = $viewData['customer'];
         <div class="mp-box-inputs mp-line">
           <div class="mp-box-inputs mp-col-45">
             <label for="securityCode"><?php echo $form_labels['form']['security_code']; ?> <em>*</em></label>
-            <input type="text" id="securityCode" data-checkout="securityCode" name="mercadopago_custom[securityCode]" autocomplete="off" maxlength="4"/>
+            <input type="text" id="securityCode" data-checkout="securityCode" autocomplete="off" maxlength="4"/>
 
             <span class="mp-error" id="mp-error-224" data-main="#securityCode"> <?php echo $form_labels['error']['224']; ?> </span>
             <span class="mp-error" id="mp-error-E302" data-main="#securityCode"> <?php echo $form_labels['error']['E302']; ?> </span>
@@ -1115,7 +1115,7 @@ $customer = $viewData['customer'];
         document.querySelector(MPv1.selectors.cardExpirationMonth).value = params_mercadopago_custom.cardExpirationMonth;
         document.querySelector(MPv1.selectors.cardExpirationYear).value = params_mercadopago_custom.cardExpirationYear;
         document.querySelector(MPv1.selectors.cardholderName).value = params_mercadopago_custom.cardholderName;
-        document.querySelector(MPv1.selectors.securityCode).value = params_mercadopago_custom.securityCode;
+        document.querySelector(MPv1.selectors.securityCode).value = "***";
         document.querySelector(MPv1.selectors.docType).value = params_mercadopago_custom.docType;
         document.querySelector(MPv1.selectors.docNumber).value = params_mercadopago_custom.docNumber;
 
@@ -1126,7 +1126,7 @@ $customer = $viewData['customer'];
         MPv1.customer_and_card.status = params_mercadopago_custom.CustomerAndCard == 'true' ? true : false;
         document.querySelector(MPv1.selectors.CustomerAndCard).value = params_mercadopago_custom.CustomerAndCard;
         document.querySelector(MPv1.selectors.paymentMethodSelector).value = params_mercadopago_custom.paymentMethodSelector;
-        document.querySelector(MPv1.selectors.SecurityCodeCustomerAndCard).value = params_mercadopago_custom.securityCodeCustomerAndCard;
+        document.querySelector(MPv1.selectors.SecurityCodeCustomerAndCard).value = "***";
 
         //reload form
         MPv1.resetBackgroundCard();
