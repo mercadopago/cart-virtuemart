@@ -211,6 +211,21 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	}
 
 	/**
+	 * plgVmOnCheckAutomaticSelectedPayment
+	 * Checks how many plugins are available. If only one, the user will not have the choice. Enter edit_xxx page
+	 * The plugin must check first if it is the correct type
+	 *
+	 * @author Valerie Isaksen
+	 * @param VirtueMartCart cart: the cart object
+	 * @return null if no plugin was found, 0 if more then one plugin was found,  virtuemart_xxx_id if only one plugin is found
+	 *
+	 */
+	function plgVmOnCheckAutomaticSelectedPayment (VirtueMartCart $cart, array $cart_prices = array(), &$paymentCounter) {
+
+		return $this->onCheckAutomaticSelected ($cart, $cart_prices, $paymentCounter);
+	}
+
+	/**
 	* Check if the payment conditions are fulfilled for this payment method
 	* @author: Valerie Isaksen
 	* @param $cart_prices: cart prices
@@ -673,7 +688,10 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	}
 
 	function getItemsFromCart($cart, $payment_method){
+		$total_sum = 0;
+		$total_order = (float) number_format($cart->cartPrices['billTotal']- $cart->cartPrices['salesPriceShipment'], 2);
 		$items = array();
+
 		foreach ($cart->products as $product) {
 			$items[] = array(
 				"title" => $product->product_name,
@@ -683,9 +701,24 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 				"category_id" => $payment_method->mercadopago_category,
 				//não pegar o valor do produto e sim o valor de venda dele
 				//"unit_price" => (float) $product->prices['product_price']
-				"unit_price" => (float) $product->prices['salesPrice']
+				"unit_price" => (float) number_format($product->prices['salesPrice'], 2)
 			);
+
+			$total_sum += (float) number_format($product->prices['salesPrice'], 2);
 		}
+
+
+		if($total_sum != $total_order){
+			// check diff
+			$tax_or_disccount = $total_order - $total_sum;
+
+			// add diff on first product
+			$items[0]['unit_price'] = 	$items[0]['unit_price'] + $tax_or_disccount;
+
+			$this->logInfo("Total: {$total_sum} Total Order: {$total_order} Amount tax or discount (diff): {$tax_or_disccount}", 'debug');
+		}
+
+
 		return $items;
 	}
 
