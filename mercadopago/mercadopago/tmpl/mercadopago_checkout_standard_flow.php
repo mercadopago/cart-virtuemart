@@ -1,6 +1,18 @@
 <?php
 
-defined('_JEXEC') or die();
+defined('_JEXEC') or die('Restricted access');
+
+/**
+ * Mercado Pago plugin
+ *
+ * @author Developers Mercado Pago <modulos@mercadopago.com>
+ * @version 2.0.1
+ * @package VirtueMart
+ * @subpackage payment
+ * @link https://www.mercadopago.com
+ * @copyright Copyright © 2016 MercadoPago.com
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ */
 
 $init_point = $viewData["init_point"];
 $payment_method = $viewData["payment_method"];
