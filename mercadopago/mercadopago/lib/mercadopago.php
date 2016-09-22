@@ -1,12 +1,19 @@
 <?php
-
 /**
  * MercadoPago Integration Library
  * Access MercadoPago for payments integration
  *
  * @author hcasatti
+ * @package VirtueMart
+ * @subpackage payment
+ * @link https://www.mercadopago.com
+ * @copyright Copyright © 2016 MercadoPago.com
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  *
  */
+
+ defined('_JEXEC') or die('Restricted access');
+ 
 $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 
 class MP {

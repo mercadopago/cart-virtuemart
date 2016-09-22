@@ -1,6 +1,20 @@
 <?php
 
-defined('_JEXEC') or die();
+defined('_JEXEC') or die('Restricted access');
+
+/**
+ * Mercado Pago plugin
+ *
+ * @author Developers Mercado Pago <modulos@mercadopago.com>
+ * @version 2.0.1
+ * @package VirtueMart
+ * @subpackage payment
+ * @link https://www.mercadopago.com
+ * @copyright Copyright © 2016 MercadoPago.com
+ * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+ */
+
+
 
 $params_mercadopago_custom = json_encode($viewData['params_mercadopago_custom']);
 $amount_cart = $viewData['amount'];
@@ -1104,7 +1118,7 @@ $customer = $viewData['customer'];
       MPv1.selectors.tempInstallments = "#tempInstallments";
       MPv1.selectors.SecurityCodeCustomerAndCard = "#customer-and-card-securityCode";
       MPv1.paths.loading = domain_store + "plugins/vmpayment/mercadopago/mercadopago/assets/images/loading.gif";
-      
+
       //init MPv1
       MPv1.Initialize(mercadopago_site_id, mercadopago_public_key);
 
