@@ -52,7 +52,7 @@ payment method exclusion setup, and sandbox/debug options.
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.0</td>
+      <td>v2.0.2</td>
       <td>Stable (Current version)</td>
       <td>VirtueMart v3.0.x</td>
     </tr>
