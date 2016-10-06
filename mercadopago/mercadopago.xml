@@ -3,11 +3,11 @@
 
     <name>Mercado Pago</name>
     <creationDate>March 15 2016</creationDate>
-    <author>Mercado Pago Development Team <modulos@mercadopago.com></author>
+    <author>Mercado Pago Development Team [modulos@mercadopago.com]</author>
     <authorUrl>https://mercadopago.com</authorUrl>
     <copyright>Copyright (C) 2004-2016 Mercado Pago. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <description>Mercado Pago</description>
 
     <files>
