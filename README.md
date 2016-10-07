@@ -1,6 +1,7 @@
 # VirtueMart - Mercado Pago Module (v3.0.x)
 
 * [Features](#features)
+* [Requirements](#requirements)
 * [Available versions](#available_versions)
 * [Installation](#installation)
 * [Standard Checkout Configuration](#configuration_std)
@@ -11,34 +12,54 @@
 <a name="features"></a>
 ##Features##
 
-**Credit Card Customized Checkout**
+Checkout options right for your business:
+We offer two checkout methods that make it easy to securely accept payments from anyone, anywhere.
 
-This feature will allow merchants to have a customized checkout for credit card
-payment. Thus, it will be possible to customize its look and feel, customers won’t be
-redirected away to complete the payment, and it will also reduce the checkout steps
-improving conversion rates.
+**Custom Checkout**
 
-*Available for Argentina, Brazil, Colombia, Mexico and Venezuela*
+Offer a checkout fully customized to your brand experience with our simple-to-use payments API.
 
-**Ticket Checkout**
+* Seamless integration— no coding required, unless you want to.
+* Full control of buying experience.
+* Store buyer’s card for fast checkout.
+* Accept tickets in addition to cards.
+* Improve conversion rate.
 
-This feature allows merchants to have a customized bar code payment. It
-reduces the checkout steps improving conversion rates. The bar code payment will
-have merchant's logo.
+*Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
 
-*Available for Argentina, Brazil, Colombia, Mexico and Venezuela*
+**Basic Checkout**
 
-**OneClick Pay (Customer & Cards)**
-This feature allows to store credit card information for the customer, so that the next time there is no need to enter all the card details. Customers will just need to re-enter the security code of the credit card they want to use.
+Great for merchants who want to get going quickly and easily.
 
-**Standard checkout**
-
-This feature allows merchants to have a standard checkout. It includes features like
-customizations of title, description, category, and external reference, integrations via
-iframe, modal, and redirection, with configurable auto-returning, max installments and
-payment method exclusion setup, and sandbox/debug options.
+* Easy website integration— no coding required.
+* Limited control of buying experience — display Checkout window as redirect, modal or iframe.
+* Store buyer’s card for fast checkout.
+* Accept tickets, bank transfer and account money in addition to cards.
+* Accept Mercado Pago's discount coupons.
 
 *Available for Argentina, Brazil, Chile, Colombia, Mexico, Peru and Venezuela*
+
+<a name="requirements"></a>
+##Requirements##
+
+Basically, the requirements of this plugin are same as you need to run Virtuemart and Joomla. Your machine should have:
+
+**Platforms**
+
+* <a href="https://www.joomla.org/download.html">Joomla</a> 2.5 or greater;
+* <a href="https://virtuemart.net/downloads/">VirtueMart</a> 3.0.x or greater;
+
+**Web Server Host**
+
+* <a href="http://php.net/">PHP</a> 5.3 or greater with CURL support;
+* <a href="http://www.mysql.com/">MySQL</a> version 5.5;
+* <a href="https://httpd.apache.org/">Apache 2.x</a>.
+
+**SSL certificate**
+
+If you're using Custom Checkout, it is a requirement that you have a SSL certificate, and the payment form to be provided under an HTTPS page.
+During the sandbox mode tests, you can operate over HTTP, but for homologation you'll need to acquire the certificate in case you don't have it.
+
 
 <a name="available_versions"></a>
 ##Available versions##
