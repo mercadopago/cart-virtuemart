@@ -59,6 +59,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			'mercadopago_client_secret' => array('', 'char'),
 			'mercadopago_type_checkout' => array('', 'char'),
 			'mercadopago_auto_redirect' => array('', 'char'),
+			'mercadopago_two_cards' => array('', 'char'),
 			'mercadopago_max_installments' => array('', 'char'),
 			'mercadopago_exclude_payment_methods' => array('', 'char'),
 			'mercadopago_width_iframe' => array('', 'char'),
@@ -1047,6 +1048,46 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	*/
 	function plgVmSetOnTablePluginParamsPayment($name, $id, &$table) {
 		return $this->setOnTablePluginParams($name, $id, $table);
+	}
+
+	/**
+	*
+	* Função acionada no botão save que retorna os dados salvados no banco de dados
+	*
+	*/
+	function plgVmSetOnTablePluginPayment(&$data, &$table){
+
+		if(	isset($data['mercadopago_client_id']) &&
+				isset($data['mercadopago_client_secret']) &&
+				$data['mercadopago_client_id'] != "" &&
+				$data['mercadopago_client_secret'] != "" &&
+				$data['mercadopago_product_checkout'] == "basic_checkout"){
+
+			//init mercado pago
+			$mercadopago = new MP($data['mercadopago_client_id'], $data['mercadopago_client_secret']);
+
+			$two_cards = $data['mercadopago_two_cards'] == 'true' ? 'active' : 'inactive';
+
+			//get info user
+			$request = array(
+				"uri" => "/account/settings",
+				"params" => array(
+					"access_token" => $mercadopago->get_access_token()
+				),
+				"data" => array(
+					"two_cards" => $two_cards
+				),
+				"headers" => array(
+					"content-type" => "application/json"
+				)
+			);
+			$account_settings = MPRestClient::put($request);
+
+			if($account_settings['status'] == 200){
+				return true;
+			}
+		}
+
 	}
 
 }

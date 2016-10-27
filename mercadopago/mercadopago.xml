@@ -92,6 +92,13 @@
                 <option value="false">VMPAYMENT_MERCADOPAGO_TEXT_NO</option>
               </field>
 
+              <field name="mercadopago_two_cards" type="list" default="true" class="mp-input-select mp-admin-checkout-basic"
+              label="VMPAYMENT_MERCADOPAGO_TWO_CARDS"
+              description="VMPAYMENT_MERCADOPAGO_TWO_CARDS_DESC">
+                <option value="true">VMPAYMENT_MERCADOPAGO_TEXT_YES</option>
+                <option value="false">VMPAYMENT_MERCADOPAGO_TEXT_NO</option>
+              </field>
+
               <field name="mercadopago_max_installments" type="list" default="24" class="mp-input-select mp-admin-checkout-basic"
               label="VMPAYMENT_MERCADOPAGO_MAX_INSTALLMENTS"
               description="VMPAYMENT_MERCADOPAGO_MAX_INSTALLMENTS_DESC">
