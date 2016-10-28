@@ -73,7 +73,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   <thead>
   <tbody>
     <tr>
-      <td>v2.0.2</td>
+      <td>v2.0.3</td>
       <td>Stable (Current version)</td>
       <td>VirtueMart v3.0.x</td>
     </tr>
