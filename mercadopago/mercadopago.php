@@ -701,7 +701,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 	function getItemsFromCart($cart, $payment_method){
 		$total_sum = 0;
-		$total_order = (float) number_format($cart->cartPrices['billTotal']- $cart->cartPrices['salesPriceShipment'], 2);
+		//jmnz value of the sum without formatting
+		$total_order = ($cart->cartPrices['billTotal'] - $cart->cartPrices['salesPriceShipment']);
 		$items = array();
 
 		foreach ($cart->products as $product) {
