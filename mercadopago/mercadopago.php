@@ -3,7 +3,7 @@
  * Mercado Pago plugin
  *
  * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.3
+ * @version 2.0.4
  * @package VirtueMart
  * @subpackage payment
  * @link https://www.mercadopago.com
@@ -650,7 +650,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		$payment['description'] = $this->vendor->vendor_store_name . " - " . $order['details']['BT']->virtuemart_order_id;
 
-		$payment['transaction_amount'] = (float) number_format($cart->cartPrices['billTotal'],2);
+		$payment['transaction_amount'] = (float) $cart->cartPrices['billTotal'];
 
 		$payment['external_reference'] = $order['details']['BT']->virtuemart_order_id;
 
@@ -701,7 +701,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 	function getItemsFromCart($cart, $payment_method){
 		$total_sum = 0;
-		$total_order = (float) number_format($cart->cartPrices['billTotal']- $cart->cartPrices['salesPriceShipment'], 2);
+		$total_order = (float) ($cart->cartPrices['billTotal'] - $cart->cartPrices['salesPriceShipment']);
 		$items = array();
 
 		foreach ($cart->products as $product) {
@@ -713,10 +713,11 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 				"category_id" => $payment_method->mercadopago_category,
 				//não pegar o valor do produto e sim o valor de venda dele
 				//"unit_price" => (float) $product->prices['product_price']
-				"unit_price" => (float) number_format($product->prices['salesPrice'], 2)
+				// "unit_price" => (float) number_format($product->prices['salesPrice'], 2)
+				"unit_price" => (float) $product->prices['salesPrice']
 			);
 
-			$total_sum += (float) number_format($product->prices['salesPrice'], 2);
+			$total_sum += (float) ($product->prices['salesPrice'] *  $product->quantity);
 		}
 
 
