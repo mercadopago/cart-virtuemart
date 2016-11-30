@@ -3,7 +3,7 @@
  * Mercado Pago plugin
  *
  * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.4
+ * @version 2.0.5
  * @package VirtueMart
  * @subpackage payment
  * @link https://www.mercadopago.com
@@ -1058,11 +1058,17 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	*/
 	function plgVmSetOnTablePluginPayment(&$data, &$table){
 
+		$this->_twoCards($data);
+		$this->_actionAnalytics($data);
+
+	}
+
+	function _twoCards($data){
 		if(	isset($data['mercadopago_client_id']) &&
-				isset($data['mercadopago_client_secret']) &&
-				$data['mercadopago_client_id'] != "" &&
-				$data['mercadopago_client_secret'] != "" &&
-				$data['mercadopago_product_checkout'] == "basic_checkout"){
+		isset($data['mercadopago_client_secret']) &&
+		$data['mercadopago_client_id'] != "" &&
+		$data['mercadopago_client_secret'] != "" &&
+		$data['mercadopago_product_checkout'] == "basic_checkout"){
 
 			//init mercado pago
 			$mercadopago = new MP($data['mercadopago_client_id'], $data['mercadopago_client_secret']);
@@ -1088,7 +1094,90 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 				return true;
 			}
 		}
+	}
 
+	function _actionAnalytics($data){
+		$type = "none";
+
+		switch ($data['mercadopago_product_checkout']) {
+			case 'basic_checkout':
+				$type = "checkout_basic";
+				break;
+			case 'custom_credit_card':
+				$type = "checkout_custom_credit_card";
+				break;
+			case 'custom_ticket':
+				$type = "checkout_custom_ticket";
+				break;
+			default:
+				$type = "none";
+			break;
+		}
+
+		if ($type != "none"){
+
+			$version = $this->_getVersionVirtueMart();
+			$mercadopago;
+			$credentials = false;
+			$two_cards = "";
+
+			if($type == "checkout_basic"){
+				if($data['mercadopago_client_id'] != "" && $data['mercadopago_client_secret'] != ""){
+					$mercadopago = new MP($data['mercadopago_client_id'], $data['mercadopago_client_secret']);
+					$two_cards = $data['mercadopago_two_cards'] == 'true' ? 'active' : 'inactive';
+					$credentials = true;
+				}
+			}else{
+				if($data['mercadopago_access_token'] != ""){
+					$mercadopago = new MP($data['mercadopago_access_token']);
+					$credentials = true;
+				}
+			}
+
+
+			if($credentials){
+				$status_module = $data['published'] == 1 ? "true" : "false";
+
+				//get info user
+				$request = array(
+					"uri" => "/modules/tracking/settings",
+					"params" => array(
+						"access_token" => $mercadopago->get_access_token()
+					),
+					"data" => array(
+						"platform" => "VirtueMart",
+						"platform_version" => $version,
+						"module_version" => "2.0.5",
+						"code_version" => phpversion()
+					),
+					"headers" => array(
+						"content-type" => "application/json"
+					)
+				);
+
+				$request['data'][$type] = $status_module;
+
+				if($two_cards != ''){
+					$request['data']['two_cards'] = $two_cards;
+				}
+
+				$account_settings = MPRestClient::post($request);
+
+				if($account_settings['status'] == 200){
+					return true;
+			 	}
+			} //end valid credentials
+		} //end type none
+	} //end function
+
+	function _getVersionVirtueMart(){
+		$version = "not_defined";
+		if(method_exists(JFactory,'getXML')){
+			$xml = JPATH_SITE .'/modules/mod_virtuemart_cart/mod_virtuemart_cart.xml';
+			$xml = JFactory::getXML($xml);
+			$version = (string) $xml->version;
+		}
+		return $version;
 	}
 
 }

@@ -3,7 +3,7 @@
  * Mercado Pago plugin
  *
  * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.4
+ * @version 2.0.5
  * @package VirtueMart
  * @subpackage payment
  * @link https://www.mercadopago.com
@@ -25,7 +25,7 @@ class JFormFieldGetMercadoPago extends JFormField {
 		$html = '<img src="' . $banner . '" />';
 		$html .= '<input type="hidden" name="mercadopago_sponsor_id" value="VALUE_SPONSOR_ID" />';
 		$html .= '<input type="hidden" name="mercadopago_site_id" value="VALUE_SITE_ID" />';
-		$html .= '<br/>Module Version: <strong>2.0.4</strong>';
+		$html .= '<br/>Module Version: <strong>2.0.5</strong>';
 
 		return $html;
 	}
