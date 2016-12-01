@@ -12,6 +12,7 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
+define("MP_MODULE_VERSION", "2.0.5");
 
 if (!class_exists('vmPSPlugin')) {
 	require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
@@ -125,14 +126,15 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	public function plgVmDisplayListFEPayment(VirtueMartCart $cart, $selected = 0, &$htmlIn) {
 
 		$htmla = array();
+		$pm;
 
 		if ($this->getPluginMethods($cart->vendorId) === 0) {
 			return false;
 		}
 
 		JHTML::script("https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js");
-		vmJsApi::css('custom_checkout_mercadopago', 'plugins/vmpayment/mercadopago/mercadopago/assets/css/');
-		vmJsApi::css('custom_checkout_ticket_mercadopago', 'plugins/vmpayment/mercadopago/mercadopago/assets/css/');
+		vmJsApi::css('custom_checkout_mercadopago', 'plugins/vmpayment/mercadopago/mercadopago/assets/css');
+		vmJsApi::css('custom_checkout_ticket_mercadopago', 'plugins/vmpayment/mercadopago/mercadopago/assets/css');
 
 		foreach ($this->methods as $payment_method) {
 			if ($this->checkConditions($cart, $payment_method, $cart->cartPrices)) {
@@ -181,6 +183,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 						$html .= $this->renderByLayout('mercadopago_checkout_custom', $params);
 
+						//open checkout
+						$this->_openCheckout($payment_method);
 					}elseif ($payment_method->mercadopago_product_checkout == "custom_ticket") {
 						$mercadopago = new MP($payment_method->mercadopago_access_token);
 						$list_payment_methods = $mercadopago->get_payment_methods_v1();
@@ -201,12 +205,18 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 							"list_payment_methods" => $payment_methods
 						);
 						$html .= $this->renderByLayout('mercadopago_checkout_custom_ticket', $params);
+
+						//open checkout
+						$this->_openCheckout($payment_method);
 					}elseif($payment_method->mercadopago_product_checkout == "basic_checkout") {
 						$params = array(
 							"virtuemart_paymentmethod_id" => $selected,
 							"site_id" => $payment_method->mercadopago_site_id
 						);
 						$html .= $this->renderByLayout('mercadopago_checkout_standard', $params);
+
+						//open checkout
+						$this->_openCheckout($payment_method);
 					}
 
 
@@ -215,6 +225,9 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 				$htmla[] = $html;
 			}
 		}
+
+
+
 
 		//add array mercado pago in list payment methods
 		$htmlIn[] = $htmla;
@@ -505,8 +518,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			"payment_method" => $payment_method
 		);
 
+		$this->_closeCheckout($payment_method);
 		$html = $this->renderByLayout('mercadopago_checkout_standard_flow', $params);
-
 		JRequest::setVar('html', $html);
 		return true;
 	}
@@ -582,6 +595,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		$this->logInfo('Result POST v1 Custom: ' . json_encode($payment_result), 'debug');
 
 		if($payment_result['status'] == 200 || $payment_result['status'] == 201 ){
+			$this->_closeCheckout($payment_method, $payment_result['response']['id']);
+
 			// empty car
 			$this->emptyCart();
 
@@ -594,6 +609,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			return true;
 
 		}else{
+			$this->_closeCheckout($payment_method);
 			return $this->processErrorV1($payment_result);
 		}
 
@@ -626,6 +642,8 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		$this->logInfo('Result POST v1 Custom Ticket: ' . json_encode($payment_result), 'debug');
 
 		if($payment_result['status'] == 200 || $payment_result['status'] == 201 ){
+			$this->_closeCheckout($payment_method, $payment_result['response']['id']);
+
 			// empty car
 			$this->emptyCart();
 
@@ -638,6 +656,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			return true;
 
 		}else{
+			$this->_closeCheckout($payment_method);
 			return $this->processErrorV1($payment_result);
 		}
 	}
@@ -650,7 +669,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		$payment['description'] = $this->vendor->vendor_store_name . " - " . $order['details']['BT']->virtuemart_order_id;
 
-		$payment['transaction_amount'] = (float) $cart->cartPrices['billTotal'];
+		$payment['transaction_amount'] = (float) number_format($cart->cartPrices['billTotal'], 2);
 
 		$payment['external_reference'] = $order['details']['BT']->virtuemart_order_id;
 
@@ -1157,7 +1176,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 					"data" => array(
 						"platform" => "VirtueMart",
 						"platform_version" => $version,
-						"module_version" => "2.0.5",
+						"module_version" => MP_MODULE_VERSION,
 						"code_version" => phpversion()
 					),
 					"headers" => array(
@@ -1188,6 +1207,61 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			$version = (string) $xml->version;
 		}
 		return $version;
+	}
+
+	function _getClientId($at){
+		$t = explode ( "-" , $at);
+		return $t[1];
+	}
+
+	function _openCheckout($payment_method){
+		$settings = $this->_getActionAndValue($payment_method);
+
+		JHTML::script("https://secure.mlstatic.com/modules/javascript/analytics.js");
+		vmJsApi::addJScript('mpopen', "
+			var MA = ModuleAnalytics;
+			MA." . $settings['func'] . "('" . $settings['token'] . "');
+			MA.setPlatform('VirtueMart');
+			MA.setPlatformVersion('" . $this->_getVersionVirtueMart() . "');
+			MA.setModuleVersion('" . MP_MODULE_VERSION . "');
+			MA.post();
+		");
+	}
+	function _closeCheckout($payment_method, $payment_id = ""){
+		$settings = $this->_getActionAndValue($payment_method);
+		JHTML::script("https://secure.mlstatic.com/modules/javascript/analytics.js");
+		vmJsApi::addJScript('mpclosed', "
+			var MA = ModuleAnalytics;
+			MA." . $settings['func'] . "('" . $settings['token'] . "');
+			MA.setPaymentType('" . $settings['type'] . "');
+			MA.setCheckoutType('" . $settings['checkout'] . "');
+			MA.setPaymentId('" . $payment_id . "');
+			MA.put();
+		");
+	}
+
+
+	function _getActionAndValue($payment_method){
+		$settings = array();
+
+		if($payment_method->mercadopago_product_checkout == "custom_credit_card"){
+			$settings["token"] = $payment_method->mercadopago_public_key;
+			$settings["func"] = "setPublicKey";
+			$settings['type'] = "credic_card";
+			$settings['checkout'] = "custom";
+		}elseif ($payment_method->mercadopago_product_checkout == "custom_ticket") {
+			$settings["token"] = $this->_getClientId($payment_method->mercadopago_access_token);
+			$settings["func"] = "setToken";
+			$settings['type'] = "ticket";
+			$settings['checkout'] = "custom";
+		}elseif($payment_method->mercadopago_product_checkout == "basic_checkout") {
+			$settings["token"] = $payment_method->mercadopago_client_id;
+			$settings["func"] = "setToken";
+			$settings['type'] = "basic";
+			$settings['checkout'] = "basic";
+		}
+
+		return $settings;
 	}
 
 }
