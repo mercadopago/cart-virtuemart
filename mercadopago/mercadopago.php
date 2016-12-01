@@ -443,7 +443,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		// busca o valor de venda e não o valor real da entrega
 		// $preference["shipments"]["cost"] = $cart->cartPrices['shipmentValue'];
-		$preference["shipments"]["cost"] = $cart->cartPrices['salesPriceShipment'];
+		// $preference["shipments"]["cost"] = (float) $cart->cartPrices['salesPriceShipment'];
 
 		//caso não existe ST usa o BT
 		$shipments = $this->getShipmentsFromOrder($order);
@@ -720,13 +720,23 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			$total_sum += (float) ($product->prices['salesPrice'] *  $product->quantity);
 		}
 
+		$items[] = array(
+			"title" => $items[0]['title'] . " - Shipment",
+			"description" => $items[0]['description'] . " - Shipment",
+			"quantity" => 1,
+			"unit_price" => (float) $cart->cartPrices['salesPriceShipment']
+		);
 
 		if($total_sum != $total_order){
 			// check diff
 			$tax_or_disccount = $total_order - $total_sum;
 
-			// add diff on first product
-			$items[0]['unit_price'] = 	$items[0]['unit_price'] + $tax_or_disccount;
+			$items[] = array(
+				"title" => $items[0]['title'],
+				"description" => $items[0]['description'],
+				"quantity" => 1,
+				"unit_price" => (float) $tax_or_disccount
+			);
 
 			$this->logInfo("Total: {$total_sum} Total Order: {$total_order} Amount tax or discount (diff): {$tax_or_disccount}", 'debug');
 		}
