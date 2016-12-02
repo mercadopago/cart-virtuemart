@@ -137,6 +137,9 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		vmJsApi::css('custom_checkout_ticket_mercadopago', 'plugins/vmpayment/mercadopago/mercadopago/assets/css');
 
 		foreach ($this->methods as $payment_method) {
+			//open checkout
+			$this->_openCheckout($payment_method);
+
 			if ($this->checkConditions($cart, $payment_method, $cart->cartPrices)) {
 
 				//set variable mercado pago
@@ -182,9 +185,6 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 						);
 
 						$html .= $this->renderByLayout('mercadopago_checkout_custom', $params);
-
-						//open checkout
-						$this->_openCheckout($payment_method);
 					}elseif ($payment_method->mercadopago_product_checkout == "custom_ticket") {
 						$mercadopago = new MP($payment_method->mercadopago_access_token);
 						$list_payment_methods = $mercadopago->get_payment_methods_v1();
@@ -205,18 +205,12 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 							"list_payment_methods" => $payment_methods
 						);
 						$html .= $this->renderByLayout('mercadopago_checkout_custom_ticket', $params);
-
-						//open checkout
-						$this->_openCheckout($payment_method);
 					}elseif($payment_method->mercadopago_product_checkout == "basic_checkout") {
 						$params = array(
 							"virtuemart_paymentmethod_id" => $selected,
 							"site_id" => $payment_method->mercadopago_site_id
 						);
 						$html .= $this->renderByLayout('mercadopago_checkout_standard', $params);
-
-						//open checkout
-						$this->_openCheckout($payment_method);
 					}
 
 
@@ -1031,6 +1025,10 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 
 	function emptyCart(){
+		if (!class_exists('VirtueMartCart')){
+			require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
+		}
+
 		$cart = VirtueMartCart::getCart();
 		$cart->emptyCart();
 	}
@@ -1211,22 +1209,29 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 	function _getClientId($at){
 		$t = explode ( "-" , $at);
-		return $t[1];
+		if(count($t) > 0){
+			return $t[1];
+		}
+		return "";
 	}
 
 	function _openCheckout($payment_method){
 		$settings = $this->_getActionAndValue($payment_method);
 
 		JHTML::script("https://secure.mlstatic.com/modules/javascript/analytics.js");
-		vmJsApi::addJScript('mpopen', "
-			var MA = ModuleAnalytics;
-			MA." . $settings['func'] . "('" . $settings['token'] . "');
-			MA.setPlatform('VirtueMart');
-			MA.setPlatformVersion('" . $this->_getVersionVirtueMart() . "');
-			MA.setModuleVersion('" . MP_MODULE_VERSION . "');
-			MA.post();
-		");
+
+		if( $settings['token'] != ""){
+			vmJsApi::addJScript('mpopen', "
+				var MA = ModuleAnalytics;
+				MA." . $settings['func'] . "('" . $settings['token'] . "');
+				MA.setPlatform('VirtueMart');
+				MA.setPlatformVersion('" . $this->_getVersionVirtueMart() . "');
+				MA.setModuleVersion('" . MP_MODULE_VERSION . "');
+				MA.post();
+			");
+		}
 	}
+
 	function _closeCheckout($payment_method, $payment_id = ""){
 		$settings = $this->_getActionAndValue($payment_method);
 		JHTML::script("https://secure.mlstatic.com/modules/javascript/analytics.js");
