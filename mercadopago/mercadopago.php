@@ -1,15 +1,15 @@
 <?php
 /**
- * Mercado Pago plugin
- *
- * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.5
- * @package VirtueMart
- * @subpackage payment
- * @link https://www.mercadopago.com
- * @copyright Copyright © 2016 MercadoPago.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
- */
+* Mercado Pago plugin
+*
+* @author Developers Mercado Pago <modulos@mercadopago.com>
+* @version 2.0.5
+* @package VirtueMart
+* @subpackage payment
+* @link https://www.mercadopago.com
+* @copyright Copyright © 2016 MercadoPago.com
+* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+*/
 
 defined('_JEXEC') or die('Restricted access');
 define("MP_MODULE_VERSION", "2.0.5");
@@ -230,15 +230,15 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	}
 
 	/**
-	 * plgVmOnCheckAutomaticSelectedPayment
-	 * Checks how many plugins are available. If only one, the user will not have the choice. Enter edit_xxx page
-	 * The plugin must check first if it is the correct type
-	 *
-	 * @author Valerie Isaksen
-	 * @param VirtueMartCart cart: the cart object
-	 * @return null if no plugin was found, 0 if more then one plugin was found,  virtuemart_xxx_id if only one plugin is found
-	 *
-	 */
+	* plgVmOnCheckAutomaticSelectedPayment
+	* Checks how many plugins are available. If only one, the user will not have the choice. Enter edit_xxx page
+	* The plugin must check first if it is the correct type
+	*
+	* @author Valerie Isaksen
+	* @param VirtueMartCart cart: the cart object
+	* @return null if no plugin was found, 0 if more then one plugin was found,  virtuemart_xxx_id if only one plugin is found
+	*
+	*/
 	function plgVmOnCheckAutomaticSelectedPayment (VirtueMartCart $cart, array $cart_prices = array(), &$paymentCounter) {
 
 		return $this->onCheckAutomaticSelected ($cart, $cart_prices, $paymentCounter);
@@ -385,22 +385,25 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			return FALSE;
 		}
 
-		// //add order
-		// $this->getPaymentCurrency($method);
-		// $paymentCurrency = CurrencyDisplay::getInstance($method->payment_currency);
-		// $total_payment_currency = round($paymentCurrency->convertCurrencyTo($method->payment_currency, $order['details']['BT']->order_total, FALSE), 2);
-		//
-		// $dbValues['payment_name'] = $this->renderPluginName($method);
-		// $dbValues['order_number'] = $order['details']['BT']->order_number;
-		// $dbValues['virtuemart_paymentmethod_id'] = $order['details']['BT']->virtuemart_paymentmethod_id;
-		// $dbValues['cost_per_transaction'] = (!empty($method->cost_per_transaction) ? $method->cost_per_transaction : 0);
-		// $dbValues['cost_percent_total'] = (!empty($method->cost_percent_total) ? $method->cost_percent_total : 0);
-		// $dbValues['payment_currency'] = 'BRL';
-		// $dbValues['payment_order_total'] = $total_payment_currency;
-		// $dbValues['reference'] = $order['details']['BT']->virtuemart_order_id;
-		//
-		// // storing data order into plugin data table
-		// $this->storePSPluginInternalData($dbValues);
+		//add order
+		VmConfig::loadJLang('com_virtuemart',true);
+		VmConfig::loadJLang('com_virtuemart_orders', TRUE);
+
+    if (!class_exists ('VirtueMartModelOrders')) {
+        require(VMPATH_ADMIN . DS . 'models' . DS . 'orders.php');
+    }
+
+    $this->getPaymentCurrency($payment_method);
+
+    $dbValues['payment_name'] = $this->renderPluginName ($payment_method);
+    $dbValues['order_number'] = $cart->order_number;
+    $dbValues['virtuemart_paymentmethod_id'] = $cart->virtuemart_paymentmethod_id;
+    $dbValues['cost_per_transaction'] = $payment_method->cost_per_transaction;
+    $dbValues['cost_percent_total'] = $payment_method->cost_percent_total;
+    $dbValues['payment_currency'] = $payment_method->payment_currency;
+    $dbValues['payment_order_total'] = $cart->cartPrices['billTotal'];
+    $dbValues['tax_id'] = $payment_method->tax_id;
+    $this->storePSPluginInternalData ($dbValues);
 
 		$this->_debug = $payment_method->mercadopago_log == "true" ? TRUE : FALSE;
 		$payment_method = $this->setVariablesMP($payment_method);
@@ -1079,6 +1082,50 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 	}
 
 	/**
+	* This event is fired after the payment method has been selected. It can be used to store
+	* additional payment info in the cart.
+	*
+	* @author Max Milbers
+	* @author Valérie isaksen
+	*
+	* @param VirtueMartCart $cart: the actual cart
+	* @return null if the payment was not selected, true if the data is valid, error message if the data is not vlaid
+	*
+	*/
+	public function plgVmOnSelectCheckPayment (VirtueMartCart $cart, &$msg) {
+
+		return $this->OnSelectCheck ($cart);
+	}
+
+	/**
+	* This method is fired when showing the order details in the frontend.
+	* It displays the method-specific data.
+	*
+	* @param integer $order_id The order ID
+	* @return mixed Null for methods that aren't active, text (HTML) otherwise
+	* @author Max Milbers
+	* @author Valerie Isaksen
+	*/
+	public function plgVmOnShowOrderFEPayment ($virtuemart_order_id, $virtuemart_paymentmethod_id, &$payment_name) {
+
+		$this->onShowOrderFE ($virtuemart_order_id, $virtuemart_paymentmethod_id, $payment_name);
+	}
+
+	/**
+	* This method is fired when showing when priting an Order
+	* It displays the the payment method-specific data.
+	*
+	* @param integer $_virtuemart_order_id The order ID
+	* @param integer $method_id  method used for this order
+	* @return mixed Null when for payment methods that were not selected, text (HTML) otherwise
+	* @author Valerie Isaksen
+	*/
+	function plgVmonShowOrderPrintPayment ($order_number, $method_id) {
+
+		return $this->onShowOrderPrint ($order_number, $method_id);
+	}
+
+	/**
 	*
 	* Função acionada no botão save que retorna os dados salvados no banco de dados
 	*
@@ -1128,16 +1175,16 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		switch ($data['mercadopago_product_checkout']) {
 			case 'basic_checkout':
-				$type = "checkout_basic";
-				break;
+			$type = "checkout_basic";
+			break;
 			case 'custom_credit_card':
-				$type = "checkout_custom_credit_card";
-				break;
+			$type = "checkout_custom_credit_card";
+			break;
 			case 'custom_ticket':
-				$type = "checkout_custom_ticket";
-				break;
+			$type = "checkout_custom_ticket";
+			break;
 			default:
-				$type = "none";
+			$type = "none";
 			break;
 		}
 
@@ -1192,7 +1239,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 				if($account_settings['status'] == 200){
 					return true;
-			 	}
+				}
 			} //end valid credentials
 		} //end type none
 	} //end function
@@ -1222,12 +1269,12 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		if( $settings['token'] != ""){
 			vmJsApi::addJScript('mpopen', "
-				var MA = ModuleAnalytics;
-				MA." . $settings['func'] . "('" . $settings['token'] . "');
-				MA.setPlatform('VirtueMart');
-				MA.setPlatformVersion('" . $this->_getVersionVirtueMart() . "');
-				MA.setModuleVersion('" . MP_MODULE_VERSION . "');
-				MA.post();
+			var MA = ModuleAnalytics;
+			MA." . $settings['func'] . "('" . $settings['token'] . "');
+			MA.setPlatform('VirtueMart');
+			MA.setPlatformVersion('" . $this->_getVersionVirtueMart() . "');
+			MA.setModuleVersion('" . MP_MODULE_VERSION . "');
+			MA.post();
 			");
 		}
 	}
@@ -1236,12 +1283,12 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		$settings = $this->_getActionAndValue($payment_method);
 		JHTML::script("https://secure.mlstatic.com/modules/javascript/analytics.js");
 		vmJsApi::addJScript('mpclosed', "
-			var MA = ModuleAnalytics;
-			MA." . $settings['func'] . "('" . $settings['token'] . "');
-			MA.setPaymentType('" . $settings['type'] . "');
-			MA.setCheckoutType('" . $settings['checkout'] . "');
-			MA.setPaymentId('" . $payment_id . "');
-			MA.put();
+		var MA = ModuleAnalytics;
+		MA." . $settings['func'] . "('" . $settings['token'] . "');
+		MA.setPaymentType('" . $settings['type'] . "');
+		MA.setCheckoutType('" . $settings['checkout'] . "');
+		MA.setPaymentId('" . $payment_id . "');
+		MA.put();
 		");
 	}
 
