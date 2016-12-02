@@ -7,7 +7,7 @@
 * [Standard Checkout Configuration](#configuration_std)
 * [Credit Card - Custom Checkout Configurationn](#configuration_custom)
 * [Ticket - Custom Checkout Configuration](#configuration_custom_ticket)
-* [Feedback](#feedback)
+* [Social](#social)
 
 <a name="features"></a>
 ##Features##
@@ -238,11 +238,11 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
     * **Choose the status when payment was canceled**: Sets up the order status when payments are canceled.
     * **Choose the status when payment was reject**: Sets up the order status when payments are rejected.
 
-<a name="feedback"></a>
-##Feedback##
+<a name="social"></a>
+##Social##
 
-  We want to know your opinion, please answer the following form.
-  <ul>
-  	<li><a href="http://goo.gl/forms/2n5jWHaQbfEtdy0E2" target="_blank">Portuguese</a></li>
-  	<li><a href="http://goo.gl/forms/A9bm8WuqTIZ89MI22" target="_blank">Spanish</a></li>
-  </ul>
+Follow our facebook group and watch our videos
+<ul>
+  <li><a href="https://www.facebook.com/groups/modulos.mercadopago/?ref=ts&fref=ts" target="_blank">FACEBOOK</a></li>
+  <li><a href="https://www.youtube.com/playlist?list=PLl8LGzRu2_sXxChIJm1e0xY6dU3Dj_tNi" target="_blank">YOUTUBE</a></li>
+</ul>
