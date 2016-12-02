@@ -1299,7 +1299,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		if($payment_method->mercadopago_product_checkout == "custom_credit_card"){
 			$settings["token"] = $payment_method->mercadopago_public_key;
 			$settings["func"] = "setPublicKey";
-			$settings['type'] = "credic_card";
+			$settings['type'] = "credit_card";
 			$settings['checkout'] = "custom";
 		}elseif ($payment_method->mercadopago_product_checkout == "custom_ticket") {
 			$settings["token"] = $this->_getClientId($payment_method->mercadopago_access_token);
