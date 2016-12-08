@@ -1198,7 +1198,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			if($type == "checkout_basic"){
 				if($data['mercadopago_client_id'] != "" && $data['mercadopago_client_secret'] != ""){
 					$mercadopago = new MP($data['mercadopago_client_id'], $data['mercadopago_client_secret']);
-					$two_cards = $data['mercadopago_two_cards'] == 'true' ? 'active' : 'inactive';
+					$two_cards = $data['mercadopago_two_cards'];
 					$credentials = true;
 				}
 			}else{
