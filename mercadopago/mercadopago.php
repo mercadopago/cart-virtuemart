@@ -3,7 +3,7 @@
 * Mercado Pago plugin
 *
 * @author Developers Mercado Pago <modulos@mercadopago.com>
-* @version 2.0.6
+* @version 2.0.5
 * @package VirtueMart
 * @subpackage payment
 * @link https://www.mercadopago.com
@@ -12,7 +12,7 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
-define("MP_MODULE_VERSION", "2.0.6");
+define("MP_MODULE_VERSION", "2.0.5");
 
 if (!class_exists('vmPSPlugin')) {
 	require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
@@ -1299,7 +1299,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		if($payment_method->mercadopago_product_checkout == "custom_credit_card"){
 			$settings["token"] = $payment_method->mercadopago_public_key;
 			$settings["func"] = "setPublicKey";
-			$settings['type'] = "credic_card";
+			$settings['type'] = "credit_card";
 			$settings['checkout'] = "custom";
 		}elseif ($payment_method->mercadopago_product_checkout == "custom_ticket") {
 			$settings["token"] = $this->_getClientId($payment_method->mercadopago_access_token);
