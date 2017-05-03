@@ -3,7 +3,7 @@
  * Mercado Pago plugin
  *
  * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.5
+ * @version 2.0.7
  * @package VirtueMart
  * @subpackage payment
  * @link https://www.mercadopago.com
@@ -24,7 +24,10 @@ class JFormFieldGetMercadoPagoCredentialsCountry extends JFormField {
     $html .= '<a href="https://www.mercadopago.com/mco/account/credentials?type=basic" target="_blank" class="mp-admin-checkout-basic">Colombia</a> | ';
     $html .= '<a href="https://www.mercadopago.com/mlm/account/credentials?type=basic" target="_blank" class="mp-admin-checkout-basic">México</a> | ';
     $html .= '<a href="https://www.mercadopago.com/mpe/account/credentials?type=basic" target="_blank" class="mp-admin-checkout-basic">Peru</a> | ';
-    $html .= '<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank" class="mp-admin-checkout-basic">Venezuela</a> ';
+		$html .= '<a href="https://www.mercadopago.com/mlu/account/credentials?type=basic" target="_blank" class="mp-admin-checkout-basic">Uruguay</a> | ';
+    $html .= '<a href="https://www.mercadopago.com/mlv/account/credentials?type=basic" target="_blank" class="mp-admin-checkout-basic">Venezuela</a>';
+
+
 
 		return $html;
 	}

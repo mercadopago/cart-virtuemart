@@ -3,7 +3,7 @@
 * Mercado Pago plugin
 *
 * @author Developers Mercado Pago <modulos@mercadopago.com>
-* @version 2.0.5
+* @version 2.0.7
 * @package VirtueMart
 * @subpackage payment
 * @link https://www.mercadopago.com
@@ -12,7 +12,7 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
-define("MP_MODULE_VERSION", "2.0.5");
+define("MP_MODULE_VERSION", "2.0.7");
 
 if (!class_exists('vmPSPlugin')) {
 	require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
@@ -336,6 +336,9 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 					break;
 					case 'MPE':
 					$sponsor_id = 217174514;
+					break;
+					case 'MLU':
+					$sponsor_id = 246379702;
 					break;
 					case 'MLV':
 					$sponsor_id = 210946191;

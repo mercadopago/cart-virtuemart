@@ -3,7 +3,7 @@
  * Mercado Pago plugin
  *
  * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.5
+ * @version 2.0.7
  * @package VirtueMart
  * @subpackage payment
  * @link https://www.mercadopago.com
@@ -30,6 +30,7 @@ class MercadoPagoHelper{
       "MPE" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
       "MLM" => "http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X60.JPG",
       "MPE" => "http://imgmp.mlstatic.com/org-img/banners/mx/medios/MLM_468X60.JPG",
+      "MLU" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
       "DEFAULT" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png"
     );
 
@@ -45,6 +46,7 @@ class MercadoPagoHelper{
       "MLC" => "https://secure.mlstatic.com/developers/site/cloud/banners/cl/468x60.gif",
       "MLV" => "https://imgmp.mlstatic.com/org-img/banners/ve/medios/468X60.jpg",
       "MPE" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "MLU" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
       "DEFAULT" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png"
     );
 
@@ -60,6 +62,7 @@ class MercadoPagoHelper{
       "MLC" => "https://secure.mlstatic.com/developers/site/cloud/banners/cl/468x60.gif",
       "MLV" => "https://imgmp.mlstatic.com/org-img/banners/ve/medios/468X60.jpg",
       "MPE" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
+      "MLU" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png",
       "DEFAULT" => "https://a248.e.akamai.net/secure.mlstatic.com/components/resources/mp/css/assets/desktop-logo-mercadopago.png"
     );
 
