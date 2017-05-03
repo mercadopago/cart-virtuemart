@@ -19,7 +19,7 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 class MP {
 
     const version = "0.5.2";
-    const module_version = "2.0.5";
+    const module_version = "2.0.7";
 
     private $client_id;
     private $client_secret;
