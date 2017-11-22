@@ -891,6 +891,7 @@ $customer = $viewData['customer'];
           MPv1.site_id = site_id
           MPv1.public_key = public_key
 
+          
           Mercadopago.setPublishableKey(MPv1.public_key);
 
           //flow: customer & cards

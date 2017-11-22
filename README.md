@@ -25,7 +25,7 @@ Offer a checkout fully customized to your brand experience with our simple-to-us
 * Accept tickets in addition to cards.
 * Improve conversion rate.
 
-*Available for Argentina, Brazil, Colombia, Mexico, Peru and Venezuela*
+*Available for Argentina, Brazil, Colombia, Mexico, Peru, Uruguay and Venezuela*
 
 **Basic Checkout**
 
@@ -113,6 +113,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
   * Mexico: https://www.mercadopago.com/mlm/herramientas/aplicaciones
   * Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
   * Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
+  * Uruguay: https://www.mercadopago.com/mlu/herramientas/aplicaciones
 
 5. Checkout settings. <br/>
 

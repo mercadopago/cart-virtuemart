@@ -23,7 +23,8 @@ class JFormFieldGetMercadoPagoCredentialsCustom extends JFormField {
 	    // $html .= '<a href="https://www.mercadopago.com/mlc/herramientas/aplicaciones" target="_blank">Chile</a> | ';
 	    $html .= '<a href="https://www.mercadopago.com/mco/account/credentials" target="_blank">Colombia</a> | ';
 	    $html .= '<a href="https://www.mercadopago.com/mlm/account/credentials" target="_blank">México</a> | ';
-	    $html .= '<a href="https://www.mercadopago.com/mlv/account/credentials" target="_blank">Venezuela</a> ';
+		$html .= '<a href="https://www.mercadopago.com/mlv/account/credentials" target="_blank">Venezuela</a> | ';
+		$html .= '<a href="https://www.mercadopago.com/mlu/account/credentials" target="_blank">Uruguai</a> ';
 		$html .= '</div>';
 
 		return $html;
