@@ -5,8 +5,8 @@
 * [Versões disponíveis](#available_versions)
 * [Instalação](#installation)
 * [Configuração de Checkout Padrão](#configuration_std)
-* [Cartão de crédito - Custom Checkout Configurationn](#configuration_custom)
-* [Ticket - Custom Checkout Configuration](#configuration_custom_ticket)
+* [Cartão de crédito - Checkout Transparente](#configuration_custom)
+* [Boleto - Checkout Transparente](#configuration_custom_ticket)
 * [Social](#social)
 
 <a name="features"> </a>
@@ -82,30 +82,30 @@ Durante os testes em modo sandbox, você pode operar por HTTP, mas para homologa
 ##Instalação##
 
 1. Baixe o módulo zip
-2. Vá para ** Extensões> Gerenciador de extensão **
-3. Em ** Carregar arquivo de pacote> Arquivo de pacote ** selecione o ** cart-virtuemart.zip ** e clique em ** Carregar e instalar **
+2. Vá para **Extensões> Gerenciador de extensão **
+3. Em **Carregar arquivo de pacote> Arquivo de pacote** selecione o **cart-virtuemart.zip** e clique em **Carregar e instalar **
 
 ## Vídeo de configuração no Youtube ##
 ## https://youtu.be/SmdRmGK-3_I
 
 <a name="configuration_std"> </a>
-## Configuração do checkout básico ##
+##Configuração do checkout básico##
 
-1. Vá para ** VirtueMart> Métodos de pagamento ** e clique em ** Novo **
+1. Vá para **VirtueMart> Métodos de pagamento** e clique em **Novo**
 
 2. Complete os campos:
-  - ** Nome do pagamento ** set ** Mercado Pago **
-  - ** Sef Alias ​​** set ** mercadopago **
-  - ** Método de pagamento ** selecione ** Mercado Pago **
-  - ** Published ** set to ** true **
-3. Clique em ** Salvar **
+  - **Nome do pagamento** set **Mercado Pago**
+  - **Sef Alias** set **mercadopago**
+  - **Método de pagamento** selecione **Mercado Pago**
+  - **Published** set to **true**
+3. Clique em **Salvar**
 
-4. Vá para ** Configuração ** guia <br/>
-  Em primeiro lugar, você precisa configurar as credenciais do seu cliente. Para fazê-lo, preencha o ** Client_id ** e ** Client_secret ** na seção Configuração de Credenciais.
+4. Vá para **Configuração** guia <br/>
+  Em primeiro lugar, você precisa configurar as credenciais do seu cliente. Para fazê-lo, preencha o **Client_id** e **Client_secret** na seção Configuração de Credenciais.
 
-  ! [Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials.png) <br />
+  ![Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials.png) <br/>
 
-  Você pode obter seu ** Client_id ** e ** Client_secret **, de acordo com seu país, nos seguintes links:
+  Você pode obter seu **Client_id** e **Client_secret**, de acordo com seu país, nos seguintes links:
 
   * Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
   * Brasil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
@@ -118,11 +118,71 @@ Durante os testes em modo sandbox, você pode operar por HTTP, mas para homologa
 
 5. Configurações do checkout básico. <br/>
 
-  ! [Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings.png) <br />
+  ![Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings.png) <br/>
 
-  ** Tipo Checkout **: Como seus clientes irão interagir com o Mercado Pago para pagar suas ordens; <br />
-  ** Redirecionamento automático **: se configurado, a plataforma retornará à sua loja quando o pagamento for aprovado. <br />
-  ** Número máximo de parcelas **: as parcelas máximas permitidas para seus clientes; <br />
-  ** Excluir métodos de pagamento **: Selecione os métodos de pagamento que você deseja não trabalhar com o Mercado Pago. <br />
-  ** iFrame Width **: A largura, em pixels, do iFrame (usado apenas com o Método de Integração iFrame); <br />
-  ** iFrame Height **: A altura, em pixels, do iFrame (usado apenas com iFrame Integration
+  **Tipo Checkout**: Como seus clientes irão interagir com o Mercado Pago para pagar suas ordens; <br/>
+  **Redirecionamento automático**: se configurado, a plataforma retornará à sua loja quando o pagamento for aprovado. <br/>
+  **Número máximo de parcelas**: as parcelas máximas permitidas para seus clientes; <br/>
+  **Excluir métodos de pagamento**: Selecione os métodos de pagamento que você deseja não trabalhar com o Mercado Pago. <br/>
+  **iFrame Width**: A largura, em pixels, do iFrame (usado apenas com o Método de Integração iFrame); <br/>
+  **iFrame Height**: A altura, em pixels, do iFrame (usado apenas com iFrame Integration
+  
+  6. Confiuraça de notificaço de pagamento - IPN. <br/>
+
+  ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
+
+  * **Escolha o status para pagamento aprovado**: Define o status do pedido quando o pagamento é aprovado.
+  * **Escolha o status para pagamento pendente**: Define o status do pedido quando o pagamento é pendente.
+  * **Escolha o status para pagamento em processamento**: Define o status do pedido quando o pagamento esta em processamento.
+  * **Escolha o status para pagamento mediação**: Define o status do pedido quando o pagamento esta em mediação.
+  * **Escolha o status para pagamento devolvido**: Define o status do pedido quando o pagamento é devolvido.
+  * **Escolha o status para pagamento em chargeback**: Define o status do pedido quando o pagamento não reconhecido pelo usuário - chargeback.
+  * **Escolha o status para pagamento cancelado**: Define o status do pedido quando o pagamento é cancelado.
+  * **Escolha o status para pagamento rejeitado**: Define o status do pedido quando o pagamento é rejeitado.
+
+7. Outras configurações. <br/>
+
+  ![Instruçes de instalação](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/other_settings.png) <br />
+
+  **Categoria da loja**: Defina a categoria da loja;<br />
+  **Log**: Habilite/Desabilite logs.<br />
+  **Logo**: Selecione o logo. Você precisa adicionar na pasta /images/stories/virtuemart/payment <br />
+  
+  <a name="configuration_custom"></a>
+##Cartão de crédito - Checkout transparente configuração##
+
+  1. Ir até **VirtueMart > Métodos de pagamento** e clique **Novo**
+
+  2. Complete the fields:
+    - **Nome do pagamento** set **Cartão de crédito- Mercado Pago**
+    - **Sef Alias** set **mercadopago**
+    - **Método de pagamento** select **Mercado Pago**
+    - **Publicado** set to **true**
+
+  3. Clique **Salvar**
+
+  4. Clique na tab **Configurações**
+
+  5. Em **Produto Mercado Pago** selecione **Carto de crédito - Checkout Transparente**
+
+  6. Agora configure com as suas credenciais. Para fazer isso, informe seu **access_token** na sessão de credenciais.
+
+    ![Instruções de configuração](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom.png) <br />
+
+    Para obter suas credenciais **Public Key** e **Access Token**, acesse os links a seguir de acordo com o seu país:
+
+    * Argentina: https://www.mercadopago.com/mla/account/credentials
+    * Brasil: https://www.mercadopago.com/mlb/account/credentials
+    * Colombia: https://www.mercadopago.com/mco/account/credentials
+    * Mexico: https://www.mercadopago.com/mlm/account/credentials
+    * Venezuela: https://www.mercadopago.com/mlv/account/credentials
+    * Uruguai: https://www.mercadopago.com/mlu/account/credentials
+    
+<a name="social"></a>
+##Social##
+
+Você pode participar do nosso grupo no facebook e assistir nossos vídeos no youtube
+<ul>
+  <li><a href="https://www.facebook.com/groups/modulos.mercadopago/?ref=ts&fref=ts" target="_blank">FACEBOOK</a></li>
+  <li><a href="https://www.youtube.com/playlist?list=PLl8LGzRu2_sXxChIJm1e0xY6dU3Dj_tNi" target="_blank">YOUTUBE</a></li>
+</ul>    
