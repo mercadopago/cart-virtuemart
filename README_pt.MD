@@ -167,14 +167,44 @@ Durante os testes em modo sandbox, você pode operar por HTTP, mas para homologa
 
     ![Instruções de configuração](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom.png) <br />
 
-    Para obter suas credenciais **Public Key** e **Access Token**, acesse os links a seguir de acordo com o seu país:
+Para obter suas credenciais **Public Key** e **Access Token**, acesse os links a seguir de acordo com o seu país:
 
-    * Argentina: https://www.mercadopago.com/mla/account/credentials
-    * Brasil: https://www.mercadopago.com/mlb/account/credentials
-    * Colombia: https://www.mercadopago.com/mco/account/credentials
-    * Mexico: https://www.mercadopago.com/mlm/account/credentials
-    * Venezuela: https://www.mercadopago.com/mlv/account/credentials
-    * Uruguai: https://www.mercadopago.com/mlu/account/credentials
+* Argentina: https://www.mercadopago.com/mla/account/credentials
+* Brasil: https://www.mercadopago.com/mlb/account/credentials
+* Colombia: https://www.mercadopago.com/mco/account/credentials
+* Mexico: https://www.mercadopago.com/mlm/account/credentials
+* Venezuela: https://www.mercadopago.com/mlv/account/credentials
+* Uruguai: https://www.mercadopago.com/mlu/account/credentials
+
+<a name="configuration_custom_ticket"></a>
+##Ticket - Custom Checkout Configuration##
+
+1. Go to **VirtueMart > Payment Methods** and click **New**
+
+2. Complete the fields:
+  - **Payment Name** set **Ticket - Mercado Pago**
+  - **Sef Alias** set **mercadopago**
+  - **Payment Method** select **Mercado Pago**
+  - **Published** set to **true**
+
+3. Click in **Save**
+
+4. Go to **Configuration** tab
+
+5. On **Mercado Pago Product** select **Ticket - Checkout Custom**
+
+6. Now configure your credentials. To make it, fill your **public_key** and **access_token** in Credentials Configuration section.
+
+![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom_ticket.png) <br />
+
+Para obter seu **Access Token**, acesse o link abaixo de acordo com o seu país:
+
+* Argentina: https://www.mercadopago.com/mla/account/credentials
+* Brazil: https://www.mercadopago.com/mlb/account/credentials
+* Colombia: https://www.mercadopago.com/mco/account/credentials
+* Mexico: https://www.mercadopago.com/mlm/account/credentials
+* Venezuela: https://www.mercadopago.com/mlv/account/credentials
+* Uruguay: https://www.mercadopago.com/mlu/account/credentials  
     
 <a name="social"></a>
 ##Social##
