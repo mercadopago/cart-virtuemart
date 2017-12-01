@@ -176,6 +176,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
     * Colombia: https://www.mercadopago.com/mco/account/credentials
     * Mexico: https://www.mercadopago.com/mlm/account/credentials
     * Venezuela: https://www.mercadopago.com/mlv/account/credentials
+    * Uruguay: https://www.mercadopago.com/mlu/account/credentials
 
   7. Checkout settings. <br/>
 
@@ -225,6 +226,7 @@ During the sandbox mode tests, you can operate over HTTP, but for homologation y
     * Colombia: https://www.mercadopago.com/mco/account/credentials
     * Mexico: https://www.mercadopago.com/mlm/account/credentials
     * Venezuela: https://www.mercadopago.com/mlv/account/credentials
+    * Uruguay: https://www.mercadopago.com/mlu/account/credentials    
 
   7. IPN settings. <br/>
 
