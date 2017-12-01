@@ -107,8 +107,8 @@ Durante os testes em modo sandbox, você pode operar por HTTP, mas para homologa
 
   Você pode obter seu **Client_id** e **Client_secret**, de acordo com seu país, nos seguintes links:
 
-    * Argentina: https://www.mercadopago.com/mla/account/credentials
-    * Brazil: https://www.mercadopago.com/mlb/account/credentials
+    * Argentina: [https://www.mercadopago.com/mla/account/credentials]
+    * Brazil: [https://www.mercadopago.com/mlb/account/credentials]
     * Colombia: https://www.mercadopago.com/mco/account/credentials
     * Mexico: https://www.mercadopago.com/mlm/account/credentials
     * Venezuela: https://www.mercadopago.com/mlv/account/credentials
@@ -116,7 +116,7 @@ Durante os testes em modo sandbox, você pode operar por HTTP, mas para homologa
 
 5. Configurações do checkout básico. <br />
 
-  ![Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings.png) <br/>
+  ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings.png) <br />
 
   **Tipo Checkout**: Como seus clientes irão interagir com o Mercado Pago para pagar suas ordens; <br />
   **Redirecionamento automático**: se configurado, a plataforma retornará à sua loja quando o pagamento for aprovado. <br />
