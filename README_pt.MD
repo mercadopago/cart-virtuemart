@@ -103,31 +103,29 @@ Durante os testes em modo sandbox, você pode operar por HTTP, mas para homologa
 4. Vá para **Configuração** guia <br/>
   Em primeiro lugar, você precisa configurar as credenciais do seu cliente. Para fazê-lo, preencha o **Client_id** e **Client_secret** na seção Configuração de Credenciais.
 
-  ![Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials.png) <br/>
+![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials.png) <br />
 
   Você pode obter seu **Client_id** e **Client_secret**, de acordo com seu país, nos seguintes links:
 
-  * Argentina: https://www.mercadopago.com/mla/herramientas/aplicaciones
-  * Brasil: https://www.mercadopago.com/mlb/ferramentas/aplicacoes
-  * Chile: https://www.mercadopago.com/mlc/herramientas/aplicaciones
-  * Colômbia: https://www.mercadopago.com/mco/herramientas/aplicaciones
-  * México: https://www.mercadopago.com/mlm/herramientas/aplicaciones
-  * Peru: https://www.mercadopago.com/mpe/account/credentials?type=basic
-  * Venezuela: https://www.mercadopago.com/mlv/herramientas/aplicaciones
-  * Uruguai: https://www.mercadopago.com/mlu/herramientas/aplicaciones
+    * Argentina: https://www.mercadopago.com/mla/account/credentials
+    * Brazil: https://www.mercadopago.com/mlb/account/credentials
+    * Colombia: https://www.mercadopago.com/mco/account/credentials
+    * Mexico: https://www.mercadopago.com/mlm/account/credentials
+    * Venezuela: https://www.mercadopago.com/mlv/account/credentials
+    * Uruguay: https://www.mercadopago.com/mlu/account/credentials
 
-5. Configurações do checkout básico. <br/>
+5. Configurações do checkout básico. <br />
 
   ![Instruções de instalação] (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings.png) <br/>
 
-  **Tipo Checkout**: Como seus clientes irão interagir com o Mercado Pago para pagar suas ordens; <br/>
-  **Redirecionamento automático**: se configurado, a plataforma retornará à sua loja quando o pagamento for aprovado. <br/>
+  **Tipo Checkout**: Como seus clientes irão interagir com o Mercado Pago para pagar suas ordens; <br />
+  **Redirecionamento automático**: se configurado, a plataforma retornará à sua loja quando o pagamento for aprovado. <br />
   **Número máximo de parcelas**: as parcelas máximas permitidas para seus clientes; <br/>
-  **Excluir métodos de pagamento**: Selecione os métodos de pagamento que você deseja não trabalhar com o Mercado Pago. <br/>
-  **iFrame Width**: A largura, em pixels, do iFrame (usado apenas com o Método de Integração iFrame); <br/>
+  **Excluir métodos de pagamento**: Selecione os métodos de pagamento que você deseja não trabalhar com o Mercado Pago. <br />
+  **iFrame Width**: A largura, em pixels, do iFrame (usado apenas com o Método de Integração iFrame); <br />
   **iFrame Height**: A altura, em pixels, do iFrame (usado apenas com iFrame Integration
   
-  6. Confiuraça de notificaço de pagamento - IPN. <br/>
+  6. Confiuraça de notificaço de pagamento - IPN. <br />
 
   ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
 
