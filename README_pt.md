@@ -177,23 +177,23 @@ Para obter suas credenciais **Public Key** e **Access Token**, acesse os links a
 * Uruguai: https://www.mercadopago.com/mlu/account/credentials
 
 <a name="configuration_custom_ticket"></a>
-##Ticket - Custom Checkout Configuration##
+##Boleto - Checkout transparente##
 
-1. Go to **VirtueMart > Payment Methods** and click **New**
+1. Ir em **VirtueMart > Payment Methods** e clique **New**
 
-2. Complete the fields:
-  - **Payment Name** set **Ticket - Mercado Pago**
+2. Complete os campos:
+  - **Nome o pagamento** informe **Ticket - Mercado Pago**
   - **Sef Alias** set **mercadopago**
-  - **Payment Method** select **Mercado Pago**
-  - **Published** set to **true**
+  - **Método de pagamento** selecione **Mercado Pago**
+  - **Publicado** informe **true**
 
-3. Click in **Save**
+3. Clique **Salvar**
 
-4. Go to **Configuration** tab
+4. Ir na tab de **Configurações**
 
-5. On **Mercado Pago Product** select **Ticket - Checkout Custom**
+5. Em **Mercado Pago Product** selecione **Ticket - Checkout Custom**
 
-6. Now configure your credentials. To make it, fill your **public_key** and **access_token** in Credentials Configuration section.
+6. Agora configure suas credenciais. Para fazer isso, preencha sua **public_key** e **access_token** na sessão de Credenciais.
 
 ![Installation Instructions](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom_ticket.png) <br />
 
@@ -204,7 +204,7 @@ Para obter seu **Access Token**, acesse o link abaixo de acordo com o seu país:
 * Colombia: https://www.mercadopago.com/mco/account/credentials
 * Mexico: https://www.mercadopago.com/mlm/account/credentials
 * Venezuela: https://www.mercadopago.com/mlv/account/credentials
-* Uruguay: https://www.mercadopago.com/mlu/account/credentials  
+* Uruguai: https://www.mercadopago.com/mlu/account/credentials  
     
 <a name="social"></a>
 ##Social##
