@@ -2,7 +2,7 @@
 
 * [Funcionalidades](#Funcionalidades)
 * [Requerimientos](#Requerimientos)
-* [Versiones disponibles](#Versiones disponibles)
+* [Versiones disponibles](#Versiones_disponibles)
 * [Instalación](#Instalación)
 * [Configuración de checkout básico](#configuración_basico)
 * [Tarjeta de crédito – Checkout personalizado](#configuración_custom)
@@ -61,7 +61,7 @@ Si estás utilizando Checkout básico, es un requerimiento que tengas un certifi
 Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homologaión necesitarás adquirir este certificado en caso de que no lo tengan. 
 
 
-<a name="Versiones disponibles"></a>
+<a name="Versiones_disponibles"></a>
 ##Versiones disponibles##
 <table>
   <thead>
@@ -151,21 +151,21 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 <a name="configuración_custom"></a>
 ##Tarjeta de crédito – Configuración de checkout personalizado ##
 
-  1. Ir a **VirtueMart > Payment Methods** y hacer click en **New**
+1. Ir a **VirtueMart > Payment Methods** y hacer click en **New**
 
-  2. Completar los campos:
-    - **Nombre de pago** setear **Tarjeta de crédito - Mercado Pago**
-    - **Sef Alias** setear **mercadopago**
-    - **Método de pago** seleccionar **Mercado Pago**
-    - **Publicar** setear **true**
+2. Completar los campos:
+  - **Nombre de pago** setear **Tarjeta de crédito - Mercado Pago**
+  - **Sef Alias** setear **mercadopago**
+  - **Método de pago** seleccionar **Mercado Pago**
+  - **Publicar** setear **true**
 
-  3. Click en **Save**
+3. Click en **Save**
 
-  4. Ir a **Configuración** 
+4. Ir a **Configuración** 
 
-  5. En **Producto Mercado Pago** seleccionar **Tarjeta de crédito - Checkout personalizado**
+5. En **Producto Mercado Pago** seleccionar **Tarjeta de crédito - Checkout personalizado**
 
-  6. Configura tus credenciales. Para hacerlo, complete tu **access_token** en la sección de configuración de las credenciales. 
+6. Configura tus credenciales. Para hacerlo, complete tu **access_token** en la sección de configuración de las credenciales. 
 
     ![Instrucciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom.png) <br />
 
@@ -178,16 +178,16 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
     * Venezuela: https://www.mercadopago.com/mlv/account/credentials
     * Uruguay: https://www.mercadopago.com/mlu/account/credentials
 
-  7. Configuración del checkout. <br/>
+7. Configuración del checkout. <br/>
 
-    ![Instruciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/checkout_settings_custom.png) <br />
+![Instruciones para la instalación](https://raw.github.com/mercadopago/cartvirtuemart/master/README.img/checkout_settings_custom.png) <br />
 
-    **Statement Descriptor**: Setea la etiqueta que el cliente verá en su facture.;<br />
-    **Binary**: Cuando se define como true, el pago solo puede ser aprobado o rechazado. Sino el status de in_process es agregado.<br />
+**Statement Descriptor**: Setea la etiqueta que el cliente verá en su facture.;<br />
+**Binary**: Cuando se define como true, el pago solo puede ser aprobado o rechazado. Sino el status de in_process es agregado.<br />
 
-  8. Configuración IPN. <br/>
+8. Configuración IPN. <br/>
 
-    ![Instrucciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
+![Instrucciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
 
   * **Elige el status para ordenes aprobadas**: Setea el status de la orden cuando los pagos son aprobados.
   * **Elige el status para ordenes pendientes**: Setea el status de la orden cuando los pagos son pendientes.
@@ -195,8 +195,8 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
   * **Elige el status para ordenes están en mediación**: Setea el status de la orden cuando los pagos están en mediación.
   * **Elige el status para ordenes son devueltas**: Setea el status de la orden cuando los pagos son devueltos.
   * **Elige el status para ordenes tienen contracargos**: Setea el status de la orden cuando los pagos son contracargos.
-   * **Elige el status para ordenes canceladas**: Setea el status de la orden cuando los pagos son cancelados.
-   * **Elige el status para ordenes rechazadas**: Setea el status de la orden cuando los pagos son rechazados.
+  * **Elige el status para ordenes canceladas**: Setea el status de la orden cuando los pagos son cancelados.
+  * **Elige el status para ordenes rechazadas**: Setea el status de la orden cuando los pagos son rechazados.
 
 <a name="configuración_custom_ticket"></a>
 ## Ticket – Checkout personalizado##
@@ -217,23 +217,23 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 
   6. Ahora configure tus credenciales. Para hacerlo, complete **public_key** y **access_token** en la sección de configuración de credenciales.
 
-    ![Instrucciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom_ticket.png) <br />
+![Instrucciones para la instalación](https://raw.github.com/mercadopago/cartvirtuemart/master/README.img/credentials_custom_ticket.png) <br />
 
-    Puedes obtener tu **Public Key** y **Access Token**, dependiendo de tu país, en:
+Puedes obtener tu **Public Key** y **Access Token**, dependiendo de tu país, en:
 
-    * Argentina: https://www.mercadopago.com/mla/account/credentials
-    * Brazil: https://www.mercadopago.com/mlb/account/credentials
-    * Colombia: https://www.mercadopago.com/mco/account/credentials
-    * Mexico: https://www.mercadopago.com/mlm/account/credentials
-    * Venezuela: https://www.mercadopago.com/mlv/account/credentials
-    * Uruguay: https://www.mercadopago.com/mlu/account/credentials
+* Argentina: https://www.mercadopago.com/mla/account/credentials
+* Brazil: https://www.mercadopago.com/mlb/account/credentials
+* Colombia: https://www.mercadopago.com/mco/account/credentials
+* Mexico: https://www.mercadopago.com/mlm/account/credentials
+* Venezuela: https://www.mercadopago.com/mlv/account/credentials
+* Uruguay: https://www.mercadopago.com/mlu/account/credentials
     
+7. Configuración IPN. <br/>
 
-  7. Configuración IPN. <br/>
+![Instrucciones para la instalación]
+(https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
 
-    ![Instrucciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/ipn_settings.png) <br />
-
-    * **Elige el status para ordenes aprobadas**: Setea el status de la orden cuando los pagos son aprobados.
+  * **Elige el status para ordenes aprobadas**: Setea el status de la orden cuando los pagos son aprobados.
   * **Elige el status para ordenes pendientes**: Setea el status de la orden cuando los pagos son pendientes.
   * **Elige el status para ordenes están en proceso**: Setea el status de la orden cuando los pagos están en proceso.
   * **Elige el status para ordenes están en mediación**: Setea el status de la orden cuando los pagos están en mediación.
