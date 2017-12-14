@@ -40,7 +40,7 @@ Ideal para merchants que quieren salir de manera rápida y fácil.
 *Disponible para Argentina, Brazil, Chile, Colombia, Mexico, Peru, Uruguay y Venezuela*
 
 <a name="Requerimientos"></a>
-## Requerimiento s##
+## Requerimientos ##
 
 Basicamente, los requerimientos de este plugin son los mismos que se necesitan para utilizer Virtuemart y Joomla. Tu máquina debería tener: 
 
