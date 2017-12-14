@@ -199,7 +199,7 @@ Puedes obtener tu **Public Key** y **Access Token**, dependiendo de tu país, en
   * **Elige el status para ordenes rechazadas**: Setea el status de la orden cuando los pagos son rechazados.
 
 <a name="configuración_custom_ticket"></a>
-## Ticket – Checkout personalizado##
+## Ticket – Checkout personalizado ##
 
 1. Ir a **VirtueMart > Payment Methods** y hacer click en **New**
 
