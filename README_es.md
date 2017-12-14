@@ -10,7 +10,7 @@
 * [Social](#social)
 
 <a name="Funcionalidades"></a>
-##Funcionalidades##
+## Funcionalidades ##
 
 Opciones de Checkout ideales para tu negocio:
 Ofrecemos dos tipos de checkout que hacen fácil aceptar pagos de forma segura de cualquier persona, en cualquier lugar. 
@@ -40,7 +40,7 @@ Ideal para merchants que quieren salir de manera rápida y fácil.
 *Disponible para Argentina, Brazil, Chile, Colombia, Mexico, Peru, Uruguay y Venezuela*
 
 <a name="Requerimientos"></a>
-##Requerimientos##
+## Requerimiento s##
 
 Basicamente, los requerimientos de este plugin son los mismos que se necesitan para utilizer Virtuemart y Joomla. Tu máquina debería tener: 
 
@@ -62,7 +62,7 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 
 
 <a name="Versiones_disponibles"></a>
-##Versiones disponibles##
+## Versiones disponibles ##
 <table>
   <thead>
     <tr>
@@ -81,13 +81,13 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 </table>
 
 <a name="Instalación"></a>
-##Instalación##
+## Instalación ##
 
 1. Descargar el zip del módulo
 2. Ir a **Extensions > Extension Manager**
 3. En **Upload Package File > Package File** seleccionar **cart-virtuemart.zip** y clickear en **Upload & Installation**
 
-<a name="configuración_básico"></a>
+<a name="configuración_basico"></a>
 ##Configuración de checkout básico##
 
 1. Ir a **VirtueMart > Payment Methods** and click **New**
@@ -142,7 +142,8 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 
 7. Otras configuraciones. <br/>
 
-  ![Instruciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/other_settings.png) <br />
+  ![Instruciones para la instalación]
+  (https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/other_settings.png) <br />
 
   **Categoría de la tienda**: Define la categoría de la tienda. ;<br />
   **Log**: Habilitar/Deshabilitar logs.<br />
@@ -167,16 +168,17 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 
 6. Configura tus credenciales. Para hacerlo, complete tu **access_token** en la sección de configuración de las credenciales. 
 
-    ![Instrucciones para la instalación](https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom.png) <br />
+![Instrucciones para la instalación]
+(https://raw.github.com/mercadopago/cart-virtuemart/master/README.img/credentials_custom.png) <br />
 
-    Puedes obtener tu **Public Key** y **Access Token**, dependiendo de tu país, en:
+Puedes obtener tu **Public Key** y **Access Token**, dependiendo de tu país, en:
 
-    * Argentina: https://www.mercadopago.com/mla/account/credentials
-    * Brazil: https://www.mercadopago.com/mlb/account/credentials
-    * Colombia: https://www.mercadopago.com/mco/account/credentials
-    * Mexico: https://www.mercadopago.com/mlm/account/credentials
-    * Venezuela: https://www.mercadopago.com/mlv/account/credentials
-    * Uruguay: https://www.mercadopago.com/mlu/account/credentials
+* Argentina: https://www.mercadopago.com/mla/account/credentials
+* Brazil: https://www.mercadopago.com/mlb/account/credentials
+* Colombia: https://www.mercadopago.com/mco/account/credentials
+* Mexico: https://www.mercadopago.com/mlm/account/credentials
+* Venezuela: https://www.mercadopago.com/mlv/account/credentials
+* Uruguay: https://www.mercadopago.com/mlu/account/credentials
 
 7. Configuración del checkout. <br/>
 
@@ -201,21 +203,21 @@ Durante los testeos en modo Sandbox, puedes operar sobre HTTP, pero para la homo
 <a name="configuración_custom_ticket"></a>
 ## Ticket – Checkout personalizado##
 
-  1. Ir a **VirtueMart > Payment Methods** y hacer click en **New**
+1. Ir a **VirtueMart > Payment Methods** y hacer click en **New**
 
-  2. Completar los campos:
-    - **Nombre de pago** setear **Ticket - Mercado Pago**
-    - **Sef Alias** setear **mercadopago**
-    - **Método de pago** seleccionar **Mercado Pago**
-    - **Publicar** setear **true**
+2. Completar los campos:
+  - **Nombre de pago** setear **Ticket - Mercado Pago**
+  - **Sef Alias** setear **mercadopago**
+  - **Método de pago** seleccionar **Mercado Pago**
+  - **Publicar** setear **true**
 
-  3. Click en **Save**
+3. Click en **Save**
 
-  4. Ir a **Configuración** tab
+4. Ir a **Configuración** tab
 
-  5. En **Mercado Pago Product** seleccionar **Ticket - Checkout Custom**
+5. En **Mercado Pago Product** seleccionar **Ticket - Checkout Custom**
 
-  6. Ahora configure tus credenciales. Para hacerlo, complete **public_key** y **access_token** en la sección de configuración de credenciales.
+6. Ahora configure tus credenciales. Para hacerlo, complete **public_key** y **access_token** en la sección de configuración de credenciales.
 
 ![Instrucciones para la instalación](https://raw.github.com/mercadopago/cartvirtuemart/master/README.img/credentials_custom_ticket.png) <br />
 
