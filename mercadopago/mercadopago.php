@@ -3,7 +3,7 @@
 * Mercado Pago plugin
 *
 * @author Developers Mercado Pago <modulos@mercadopago.com>
-* @version 2.0.7
+* @version 2.1.0
 * @package VirtueMart
 * @subpackage payment
 * @link https://www.mercadopago.com
@@ -12,7 +12,8 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
-define("MP_MODULE_VERSION", "2.0.7");
+define("MP_MODULE_VERSION", _getVersionMPModule());
+define("VIRTUEMART_VERSION", _getVersionVirtueMart());
 
 if (!class_exists('vmPSPlugin')) {
 	require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
@@ -24,6 +25,26 @@ if (!class_exists('MP')) {
 
 if (!class_exists('MercadoPagoHelper')) {
 	require(VMPATH_ROOT . DS.'plugins'.DS.'vmpayment'.DS.'mercadopago'.DS.'mercadopago'.DS.'helpers'.DS.'mercadopago.php');
+}
+
+function _getVersionMPModule() {
+	$version = "not_defined";
+	if(method_exists(JFactory,'getXML')){
+		$xml = JPATH_SITE .'/plugins/vmpayment/mercadopago/mercadopago.xml';
+		$xml = JFactory::getXML($xml);
+		$version = (string) $xml->version;
+	}
+	return $version;
+}
+
+function _getVersionVirtueMart(){
+	$version = "not_defined";
+	if(method_exists(JFactory,'getXML')){
+		$xml = JPATH_SITE .'/modules/mod_virtuemart_cart/mod_virtuemart_cart.xml';
+		$xml = JFactory::getXML($xml);
+		$version = (string) $xml->version;
+	}
+	return $version;
 }
 
 class plgVmPaymentMercadoPago extends vmPSPlugin {
@@ -1193,7 +1214,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		if ($type != "none"){
 
-			$version = $this->_getVersionVirtueMart();
+			$version = VIRTUEMART_VERSION;
 			$mercadopago;
 			$credentials = false;
 			$two_cards = "";
@@ -1247,16 +1268,6 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 		} //end type none
 	} //end function
 
-	function _getVersionVirtueMart(){
-		$version = "not_defined";
-		if(method_exists(JFactory,'getXML')){
-			$xml = JPATH_SITE .'/modules/mod_virtuemart_cart/mod_virtuemart_cart.xml';
-			$xml = JFactory::getXML($xml);
-			$version = (string) $xml->version;
-		}
-		return $version;
-	}
-
 	function _getClientId($at){
 		$t = explode ( "-" , $at);
 		if(count($t) > 0){
@@ -1275,7 +1286,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 			var MA = ModuleAnalytics;
 			MA." . $settings['func'] . "('" . $settings['token'] . "');
 			MA.setPlatform('VirtueMart');
-			MA.setPlatformVersion('" . $this->_getVersionVirtueMart() . "');
+			MA.setPlatformVersion('" . VIRTUEMART_VERSION . "');
 			MA.setModuleVersion('" . MP_MODULE_VERSION . "');
 			MA.post();
 			");

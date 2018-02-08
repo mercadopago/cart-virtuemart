@@ -19,7 +19,6 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 class MP {
 
     const version = "0.5.2";
-    const module_version = "2.0.7";
 
     private $client_id;
     private $client_secret;
@@ -235,7 +234,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "user-agent" => "platform:desktop,type:virtuemart,so:" . MP::module_version
+                "user-agent" => "platform:desktop,type:virtuemart,so:" . MP_MODULE_VERSION
             ),
             "data" => $preference
         );
@@ -295,7 +294,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:v1-whitelabel,type:virtuemart,so:" . MP::module_version
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:virtuemart,so:" . MP_MODULE_VERSION
             ),
             "data" => $preference
         );
@@ -555,6 +554,7 @@ class MP {
  * MercadoPago cURL RestClient
  */
 class MPRestClient {
+    static $check_loop = 0;
     const API_BASE_URL = "https://api.mercadopago.com";
 
     private static function build_request($request) {
@@ -597,7 +597,7 @@ class MPRestClient {
         // Build $connect
         $connect = curl_init();
 
-        curl_setopt($connect, CURLOPT_USERAGENT, "platform:desktop,type:virtuemart,so:" . MP::module_version);
+        curl_setopt($connect, CURLOPT_USERAGENT, "platform:desktop,type:virtuemart,so:" . MP_MODULE_VERSION);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connect, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($connect, CURLOPT_CAINFO, $GLOBALS["LIB_LOCATION"] . "/cacert.pem");
@@ -644,30 +644,61 @@ class MPRestClient {
         $api_result = curl_exec($connect);
         $api_http_code = curl_getinfo($connect, CURLINFO_HTTP_CODE);
 
-        // if ($api_result === FALSE) {
-        //     throw new MercadoPagoException (curl_error ($connect));
-        // }
-
         $response = array(
             "status" => $api_http_code,
             "response" => json_decode($api_result, true)
         );
 
-        // if ($response['status'] >= 400) {
-        //     $message = $response['response']['message'];
-        //     if (isset ($response['response']['cause'])) {
-        //         if (isset ($response['response']['cause']['code']) && isset ($response['response']['cause']['description'])) {
-        //             $message .= " - ".$response['response']['cause']['code'].': '.$response['response']['cause']['description'];
-        //         } else if (is_array ($response['response']['cause'])) {
-        //             foreach ($response['response']['cause'] as $cause) {
-        //                 $message .= " - ".$cause['code'].': '.$cause['description'];
-        //             }
-        //         }
-        //     }
-        //
-        //     throw new MercadoPagoException ($message, $response['status']);
-        // }
+        if ($response != null && $response['status'] >= 400 && self::$check_loop == 0) {
+          try {
+            self::$check_loop = 1;
+            $message = null;
+            $payload = null;
+            $endpoint = null;
+            $errors = array();
 
+            if (isset($response['response'])) {
+              if (isset($response['response']['message'])) {
+                $message = $response['response']['message'];
+              }
+              if (isset ($response['response']['cause'])) {
+                  if (isset ($response['response']['cause']['code']) && isset ($response['response']['cause']['description'])) {
+                      $message .= " - ".$response['response']['cause']['code'].': '.$response['response']['cause']['description'];
+                  } else if (is_array ($response['response']['cause'])) {
+                      foreach ($response['response']['cause'] as $cause) {
+                          $message .= " - ".$cause['code'].': '.$cause['description'];
+                      }
+                  }
+              }
+            }
+            if ($request != null) {
+              if (isset($request["uri"]) && $request["uri"] != null) {
+                $endpoint = $request["uri"];
+              }
+
+              if (isset($request["data"]) && $request["data"] != null) {
+                $payload = json_encode($request["data"]);
+              }
+            }
+
+            $errors[] = array(
+              "endpoint" => $endpoint,
+              "message" => $message,
+              "payloads" => $payload
+            );
+
+
+            $log_response = self::sendErrorLog($request["status"], $errors);
+
+            if($log_response["status"] > 400) {
+              throw new MercadoPagoException ("error to call API LOGS".$log_response["response"],
+                                              $log_response["status"]);
+            }
+          } catch (Exception $e) {
+            throw new MercadoPagoException ("error to call API LOGS".$e, 500);
+          }
+        }
+        self::$check_loop = 0;
         curl_close($connect);
 
         return $response;
@@ -708,6 +739,35 @@ class MPRestClient {
 
         return self::exec($request);
     }
+
+    /**
+    * Send error log to LogApi
+    * @param code
+    * @param errors
+    */
+    public static function sendErrorLog($code, $errors) {
+
+      $data = array(
+        "code" => $code,
+        "module" => "VirtueMart",
+        "module_version" => MP_MODULE_VERSION,
+        "url_store" => $_SERVER['HTTP_HOST'],
+        "email_admin" => MercadoPagoHelper::getAdminEmail(),
+        "country_initial" => MercadoPagoHelper::getShopCountry(),
+        "server_version" => php_uname('s'),
+        "code_lang" => "PHP" . phpversion(),
+        "errors" => $errors
+      );
+
+      $request = array(
+        "uri" => "/modules/log",
+        "data" => $data
+      );
+
+      $result_response = MPRestClient::post($request);
+      return $result_response;
+    }
+
 }
 
 class MercadoPagoException extends Exception {

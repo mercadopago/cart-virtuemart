@@ -3,7 +3,7 @@
  * Mercado Pago plugin
  *
  * @author Developers Mercado Pago <modulos@mercadopago.com>
- * @version 2.0.7
+ * @version 2.1.0
  * @package VirtueMart
  * @subpackage payment
  * @link https://www.mercadopago.com
@@ -150,5 +150,59 @@ class MercadoPagoHelper{
     return $payment_return;
 
   }
+
+  /**
+	 * Get shop country from shop currency
+	 *
+	 * Get shop country on 2 letter code format from configured currency for logs
+	 * api country initials
+	 *
+	 * @return country_initials string
+	 */
+	public static function getShopCountry()
+	{
+		$curr_country_map = array(
+			'BRL' => 'BR',
+			'ARS' => 'AR',
+			'CLP' => 'CL',
+			'COP' => 'CO',
+			'MXN' => 'MX',
+			'UYU' => 'UY',
+			'UYI' => 'UY',
+			'VEF' => 'VE',
+			'PEN' => 'PE'
+		);
+		$db = JFactory::getDBO();
+		$query = "SELECT curr.`currency_code_3` ccode FROM `#__virtuemart_vendors` AS vend
+							JOIN `#__virtuemart_currencies` AS curr
+							ON vend.`vendor_currency` = curr.`virtuemart_currency_id`
+							LIMIT 1";
+		$db->setQuery($query);
+		$currency = $db->loadObject();
+    $currency = json_decode(json_encode($currency), true);
+		return array_key_exists($currency['ccode'], $curr_country_map) ? $curr_country_map[$currency['ccode']] : "";
+	}
+
+	/**
+	 * Get super user email
+	 *
+	 * Get administrator email from db in orther to send it to Logs API.
+	 *
+	 * @return admin_email string
+	 */
+	public static function getAdminEmail()
+	{
+		$db = JFactory::getDBO();
+		$query = "SELECT u.email
+							FROM `#__user_usergroup_map` ugm
+							JOIN `#__usergroups` ug ON ug.`id` = ugm.`group_id`
+							JOIN `#__users` u ON u.`id` = ugm.`user_id`
+							WHERE ug.`title` = 'Super Users'
+							LIMIT 1";
+		$db->setQuery($query);
+		$user = $db->loadObject();
+    $user = json_decode(json_encode($user), true);
+		return array_key_exists('email', $user) ? $user['email'] : "";
+	}
 
 }
