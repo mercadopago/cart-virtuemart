@@ -3,7 +3,7 @@
 * Mercado Pago plugin
 *
 * @author Developers Mercado Pago <modulos@mercadopago.com>
-* @version 2.0.7
+* @version 2.1.0
 * @package VirtueMart
 * @subpackage payment
 * @link https://www.mercadopago.com
