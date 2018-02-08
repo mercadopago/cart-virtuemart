@@ -636,7 +636,7 @@ $customer = $viewData['customer'];
           var $inputs = MPv1.getForm().querySelectorAll('[data-checkout]');
           var $inputs_to_create_token = MPv1.getInputsToCreateToken();
 
-          console.log("createTokenByEvent", $inputs_to_create_token);
+          // console.log("createTokenByEvent", $inputs_to_create_token);
 
           for(var x = 0; x < $inputs.length; x++){
             var element = $inputs[x];
@@ -891,7 +891,7 @@ $customer = $viewData['customer'];
           MPv1.site_id = site_id
           MPv1.public_key = public_key
 
-          
+
           Mercadopago.setPublishableKey(MPv1.public_key);
 
           //flow: customer & cards

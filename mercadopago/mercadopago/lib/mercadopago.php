@@ -19,7 +19,6 @@ $GLOBALS["LIB_LOCATION"] = dirname(__FILE__);
 class MP {
 
     const version = "0.5.2";
-    const module_version = "2.0.7";
 
     private $client_id;
     private $client_secret;
@@ -235,7 +234,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "user-agent" => "platform:desktop,type:virtuemart,so:" . MP::module_version
+                "user-agent" => "platform:desktop,type:virtuemart,so:" . MP_MODULE_VERSION
             ),
             "data" => $preference
         );
@@ -295,7 +294,7 @@ class MP {
                 "access_token" => $this->get_access_token()
             ),
             "headers" => array(
-                "X-Tracking-Id" => "platform:v1-whitelabel,type:virtuemart,so:" . MP::module_version
+                "X-Tracking-Id" => "platform:v1-whitelabel,type:virtuemart,so:" . MP_MODULE_VERSION
             ),
             "data" => $preference
         );
@@ -555,6 +554,7 @@ class MP {
  * MercadoPago cURL RestClient
  */
 class MPRestClient {
+    static $check_loop = 0;
     const API_BASE_URL = "https://api.mercadopago.com";
 
     private static function build_request($request) {
@@ -597,7 +597,7 @@ class MPRestClient {
         // Build $connect
         $connect = curl_init();
 
-        curl_setopt($connect, CURLOPT_USERAGENT, "platform:desktop,type:virtuemart,so:" . MP::module_version);
+        curl_setopt($connect, CURLOPT_USERAGENT, "platform:desktop,type:virtuemart,so:" . MP_MODULE_VERSION);
         curl_setopt($connect, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connect, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($connect, CURLOPT_CAINFO, $GLOBALS["LIB_LOCATION"] . "/cacert.pem");
@@ -649,8 +649,9 @@ class MPRestClient {
             "response" => json_decode($api_result, true)
         );
 
-        if ($response != null && $response['status'] >= 400) {
+        if ($response != null && $response['status'] >= 400 && self::$check_loop == 0) {
           try {
+            self::$check_loop = 1;
             $message = null;
             $payload = null;
             $endpoint = null;
@@ -680,18 +681,24 @@ class MPRestClient {
               }
             }
 
-            $errors = array(
+            $errors[] = array(
               "endpoint" => $endpoint,
               "message" => $message,
               "payloads" => $payload
             );
 
-            sendErrorLog($request["status"], $errors);
+
+            $log_response = self::sendErrorLog($request["status"], $errors);
+
+            if($log_response["status"] > 400) {
+              throw new MercadoPagoException ("error to call API LOGS".$log_response["response"],
+                                              $log_response["status"]);
+            }
           } catch (Exception $e) {
             throw new MercadoPagoException ("error to call API LOGS".$e, 500);
           }
         }
-
+        self::$check_loop = 0;
         curl_close($connect);
 
         return $response;
@@ -739,11 +746,16 @@ class MPRestClient {
     * @param errors
     */
     public static function sendErrorLog($code, $errors) {
+
       $data = array(
         "code" => $code,
         "module" => "VirtueMart",
-        "module_version" => "2.0.7",
+        "module_version" => MP_MODULE_VERSION,
         "url_store" => $_SERVER['HTTP_HOST'],
+        "email_admin" => MercadoPagoHelper::getAdminEmail(),
+        "country_initial" => MercadoPagoHelper::getShopCountry(),
+        "server_version" => php_uname('s'),
+        "code_lang" => "PHP" . phpversion(),
         "errors" => $errors
       );
 
@@ -753,9 +765,9 @@ class MPRestClient {
       );
 
       $result_response = MPRestClient::post($request);
-
       return $result_response;
     }
+
 }
 
 class MercadoPagoException extends Exception {
