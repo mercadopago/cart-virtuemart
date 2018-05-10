@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/dfe51fe1f741d1149dc9/maintainability)](https://codeclimate.com/github/mercadopago/cart-virtuemart/maintainability)
+
 # VirtueMart - Mercado Pago Module (v3.0.x)
 
 * [Features](#features)
