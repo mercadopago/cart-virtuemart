@@ -241,13 +241,3 @@ Puedes obtener tu **Public Key** y **Access Token**, dependiendo de tu país, en
   * **Elige el status para ordenes canceladas**: Setea el status de la orden cuando los pagos son cancelados.
   * **Elige el status para ordenes rechazadas**: Setea el status de la orden cuando los pagos son rechazados.
 
-
-<a name="social"></a>
-## social ##
-
-Sigue nuestro grupo de facebook y mira nuestros videos
-<ul>
-  <li><a href="https://www.facebook.com/groups/modulos.mercadopago/?ref=ts&fref=ts" target="_blank">FACEBOOK</a></li>
-  <li><a href="https://www.youtube.com/playlist?list=PLl8LGzRu2_sXxChIJm1e0xY6dU3Dj_tNi" target="_blank">YOUTUBE</a></li>
-</ul>
-
