@@ -556,6 +556,11 @@ class MP {
 class MPRestClient {
     static $check_loop = 0;
     const API_BASE_URL = "https://api.mercadopago.com";
+    
+    /**
+     *Product Id 
+     */
+    const PRODUCT_ID = "BC32CANTRPP001U8NHO0";
 
     private static function build_request($request) {
         if (!extension_loaded ("curl")) {
@@ -572,6 +577,12 @@ class MPRestClient {
 
         // Set headers
         $headers = array("accept: application/json");
+
+        //set x_product_id
+        if($request["method"] == 'POST'){
+            $header_opt[] = "x-product-id: " . self::PRODUCT_ID;
+        }
+
         $json_content = true;
         $form_content = false;
         $default_content_type = true;
