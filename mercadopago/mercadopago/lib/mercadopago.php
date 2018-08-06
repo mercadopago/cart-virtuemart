@@ -474,7 +474,7 @@ class MPRestClient {
     /**
      *Product Id 
      */
-    const PRODUCT_ID = "BC32CANTRPP001U8NHO0";
+    const PRODUCT_ID = "BC32CJBU643001OI39C0";
 
     private static function build_request($request) {
         if (!extension_loaded ("curl")) {
