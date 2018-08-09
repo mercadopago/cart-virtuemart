@@ -3,7 +3,7 @@
 * Mercado Pago plugin
 *
 * @author Developers Mercado Pago <modulos@mercadopago.com>
-* @version 2.1.0
+* @version 2.2.0
 * @package VirtueMart
 * @subpackage payment
 * @link https://www.mercadopago.com
@@ -690,7 +690,7 @@ class plgVmPaymentMercadoPago extends vmPSPlugin {
 
 		$payment['description'] = $this->vendor->vendor_store_name . " - " . $order['details']['BT']->virtuemart_order_id;
 
-		$payment['transaction_amount'] = (float) number_format($cart->cartPrices['billTotal'], 2);
+		$payment['transaction_amount'] = (float) number_format($cart->cartPrices['billTotal'], 2, '.', '');
 
 		$payment['external_reference'] = $order['details']['BT']->virtuemart_order_id;
 

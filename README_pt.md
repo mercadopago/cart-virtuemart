@@ -206,11 +206,3 @@ Para obter seu **Access Token**, acesse o link abaixo de acordo com o seu país:
 * Venezuela: https://www.mercadopago.com/mlv/account/credentials
 * Uruguai: https://www.mercadopago.com/mlu/account/credentials  
     
-<a name="social"></a>
-##Social##
-
-Você pode participar do nosso grupo no facebook e assistir nossos vídeos no youtube
-<ul>
-  <li><a href="https://www.facebook.com/groups/modulos.mercadopago/?ref=ts&fref=ts" target="_blank">FACEBOOK</a></li>
-  <li><a href="https://www.youtube.com/playlist?list=PLl8LGzRu2_sXxChIJm1e0xY6dU3Dj_tNi" target="_blank">YOUTUBE</a></li>
-</ul>    

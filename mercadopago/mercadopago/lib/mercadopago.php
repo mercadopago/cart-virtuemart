@@ -100,28 +100,6 @@ class MP {
     }
 
     /**
-     * Get information for specific payment
-     * @param int $id
-     * @return array(json)
-     */
-    public function get_payment($id) {
-        $uri_prefix = $this->sandbox ? "/sandbox" : "";
-
-        $request = array(
-            "uri" => $uri_prefix."/collections/notifications/{$id}",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            )
-        );
-
-        $payment_info = MPRestClient::get($request);
-        return $payment_info;
-    }
-    public function get_payment_info($id) {
-        return $this->get_payment($id);
-    }
-
-    /**
      * Get information for specific authorized payment
      * @param id
      * @return array(json)
@@ -136,46 +114,6 @@ class MP {
 
         $authorized_payment_info = MPRestClient::get($request);
         return $authorized_payment_info;
-    }
-
-    /**
-     * Refund accredited payment
-     * @param int $id
-     * @return array(json)
-     */
-    public function refund_payment($id) {
-        $request = array(
-            "uri" => "/collections/{$id}",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            ),
-            "data" => array(
-                "status" => "refunded"
-            )
-        );
-
-        $response = MPRestClient::put($request);
-        return $response;
-    }
-
-    /**
-     * Cancel pending payment
-     * @param int $id
-     * @return array(json)
-     */
-    public function cancel_payment($id) {
-        $request = array(
-            "uri" => "/collections/{$id}",
-            "params" => array(
-                "access_token" => $this->get_access_token()
-            ),
-            "data" => array(
-                "status" => "cancelled"
-            )
-        );
-
-        $response = MPRestClient::put($request);
-        return $response;
     }
 
     /**
@@ -196,30 +134,6 @@ class MP {
 
         $response = MPRestClient::put($request);
         return $response;
-    }
-
-    /**
-     * Search payments according to filters, with pagination
-     * @param array $filters
-     * @param int $offset
-     * @param int $limit
-     * @return array(json)
-     */
-    public function search_payment($filters, $offset = 0, $limit = 0) {
-        $filters["offset"] = $offset;
-        $filters["limit"] = $limit;
-
-        $uri_prefix = $this->sandbox ? "/sandbox" : "";
-
-        $request = array(
-            "uri" => $uri_prefix."/collections/search",
-            "params" => array_merge ($filters, array(
-                "access_token" => $this->get_access_token()
-            ))
-        );
-
-        $collection_result = MPRestClient::get($request);
-        return $collection_result;
     }
 
     /**
@@ -556,6 +470,11 @@ class MP {
 class MPRestClient {
     static $check_loop = 0;
     const API_BASE_URL = "https://api.mercadopago.com";
+    
+    /**
+     *Product Id 
+     */
+    const PRODUCT_ID = "BC32CJBU643001OI39C0";
 
     private static function build_request($request) {
         if (!extension_loaded ("curl")) {
@@ -572,6 +491,12 @@ class MPRestClient {
 
         // Set headers
         $headers = array("accept: application/json");
+
+        //set x_product_id
+        if($request["method"] == 'POST'){
+            $header_opt[] = "x-product-id: " . self::PRODUCT_ID;
+        }
+
         $json_content = true;
         $form_content = false;
         $default_content_type = true;
